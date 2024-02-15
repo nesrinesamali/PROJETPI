@@ -1,0 +1,16 @@
+{# templates/consultation/form.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Add calendrier</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.idMedecin) }}
+    {{ form_row(form.jourFeries) }}
+    {{ form_row(form.infos) }}
+    {{ form_row(form.diagnostique) }}
+
+    <button type="submit">Submit</button>
+    {{ form_end(form) }}
+{% endblock %}

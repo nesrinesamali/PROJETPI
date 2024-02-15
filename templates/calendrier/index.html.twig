@@ -1,0 +1,44 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Calendriers{% endblock %}
+
+{% block body %}
+    <h1>Liste des Calendriers <a href="{{ path('calendrier_new') }}" class="btn btn-success">Ajouter</a></h1>
+
+    {% if calendriers|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID calendrier</th>
+                    <th>ID Médecin</th>
+                    <th>Jours Feries</th>
+                    <th>Infos</th>
+                    <th>Diagnostique</th>
+                    
+                    <th>Action</th> 
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for calendrier in calendriers %}
+                    <tr>
+                        <td>{{ calendrier.id }}</td>
+                        <td>{{ calendrier.idMedecin }}</td>
+                        <td>{{ calendrier.jourFeries }}</td>
+                        <td>{{ calendrier.infos }}</td>
+                        <td>{{ calendrier.diagnostique }}</td>
+                        <td>
+                            <a href="{{ path('calendrier_edit', {'id': calendrier.id}) }}">Update</a>
+ <form action="{{ path('calendrier_delete', {'id': calendrier.id}) }}"  class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette calendrier?')">
+                                <i class="fa fa-trash"></i> Supprimer
+                            </button>                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune calendrier disponible.</p>
+    {% endif %}
+{% endblock %}
