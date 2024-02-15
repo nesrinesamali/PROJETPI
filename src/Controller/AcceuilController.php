@@ -15,4 +15,12 @@ class AcceuilController extends AbstractController
             'controller_name' => 'AcceuilController',
         ]);
     }
+
+    #[Route('/fr', name: 'fr')]
+    public function front(): Response
+    {
+        return $this->render('dashboard/front.html.twig', [
+            'controller_name' => 'AcceuilController',
+        ]);
+    }
 }
