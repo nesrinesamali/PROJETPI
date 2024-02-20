@@ -1,45 +1,148 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashboard/front.html.twig' %}
 
 {% block title %}Prescription index{% endblock %}
 
 {% block body %}
-    <h1>Prescription index</h1>
+    <style>
+    /* Style for the h1 heading */
+    h1 {
+        text-align: center;
+        color: #007bff; /* Blue color */
+        margin-bottom: 20px; /* Add some space below the heading */
+    }
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Patient</th>
-                <th>Doctor</th>
-                <th>Created_at</th>
-                <th>Medications</th>
-                <th>Instructions</th>
-                <th>Pharmacy</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for prescription in prescriptions %}
-            <tr>
-                <td>{{ prescription.id }}</td>
-                <td>{{ prescription.patient }}</td>
-                <td>{{ prescription.doctor }}</td>
-                <td>{{ prescription.CreatedAt ? prescription.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ prescription.medications }}</td>
-                <td>{{ prescription.instructions }}</td>
-                <td>{{ prescription.pharmacy }}</td>
-                <td>
-                    <a href="{{ path('app_prescription_show', {'id': prescription.id}) }}">show</a>
-                    <a href="{{ path('app_prescription_edit', {'id': prescription.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    /* Style for the table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-    <a href="{{ path('app_prescription_new') }}">Create new</a>
+    .table th,
+    .table td {
+        padding: 8px;
+        border-bottom: 1px solid #dee2e6; /* Border color */
+    }
+
+    .table th {
+        background-color: #f8f9fa; /* Table header background color */
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .table td {
+        text-align: left;
+    }
+
+    /* Style for table actions */
+    .table a {
+        color: #007bff; /* Link color */
+        text-decoration: none;
+        margin-right: 10px; /* Add space between links */
+    }
+
+    .table a:hover {
+        text-decoration: underline; /* Underline on hover */
+    }
+    .create{
+        display: inline-block;
+        width: 140px; /* Set the width of the button */
+        height: 45px; /* Set the height of the button */
+        padding: 10px 20px; /* Set the padding inside the button */
+        font-size: 18px;
+        background-color: #007bff; /* Blue color */
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none; /* Remove default link underline */
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+    } 
+     .create1{
+        display: inline-block;
+        width: 50px; /* Set the width of the button */
+        height: 30px; /* Set the height of the button */
+        padding: 5px 10px; /* Set the padding inside the button */
+        font-size: 13px;
+        background-color: #007bff; /* Blue color */
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none; /* Remove default link underline */
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+    }
+ .create2{
+        display: inline-block;
+        width: 50px; /* Set the width of the button */
+        height: 30px; /* Set the height of the button */
+        padding: 5px 10px; /* Set the padding inside the button */
+        font-size: 13px;
+        background-color: #ff3333; /* Blue color */
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none; /* Remove default link underline */
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+    }
+
+    .create:hover {
+        background-color: #0056b3; 
+        color: white;/* Darker shade of blue on hover */
+    }
+    .create1:hover {
+        background-color: #0056b3; 
+        color: white;/* Darker shade of blue on hover */
+    }
+    .create2:hover {
+        background-color: #990000; 
+        color: white;/* Darker shade of blue on hover */
+    }
+</style>
+
+<h1>Prescription index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Created_at</th>
+            <th>Medications</th>
+            <th>Instructions</th>
+            <th>Pharmacy</th>
+            <th>Actions</th> <!-- Corrected typo -->
+        </tr>
+    </thead>
+    <tbody>
+    {% for prescription in prescriptions %}
+        <tr>
+            <td>{{ prescription.id }}</td>
+            <td>{{ prescription.patient }}</td>
+            <td>{{ prescription.doctor }}</td>
+            <td>{{ prescription.CreatedAt ? prescription.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            <td>{{ prescription.medications }}</td>
+            <td>{{ prescription.instructions }}</td>
+            <td>{{ prescription.pharmacy }}</td>
+            <td>
+               <div class=create1> <a href="{{ path('app_prescription_show', {'id': prescription.id}) }}">show</a></div>
+               <div class=create2> <a href="{{ path('app_prescription_edit', {'id': prescription.id}) }}">edit</a>
+            </div></td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="8">No records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class=create>
+<a href="{{ path('app_prescription_new') }}">Create new</a>
+</div>
+
+    
 {% endblock %}
