@@ -1,4 +1,72 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form-container">
+  {{ form_start(form) }}
+    <div class="form-group">
+      {{ form_label(form.patient, 'Patient:', {'label_attr': {'class': 'form-label'}}) }}
+      {{ form_widget(form.patient, {'attr': {'class': 'form-control'}}) }}
+
+      {{ form_label(form.doctor, 'Doctor:', {'label_attr': {'class': 'form-label'}}) }}
+      {{ form_widget(form.doctor, {'attr': {'class': 'form-control'}}) }}
+
+      {{ form_label(form.Created_at, 'Created at:', {'label_attr': {'class': 'form-label'}}) }}
+      {{ form_widget(form.Created_at, {'attr': {'class': 'form-control'}}) }}
+
+      {{ form_label(form.medications, 'Medications:', {'label_attr': {'class': 'form-label'}}) }}
+      {{ form_widget(form.medications, {'attr': {'class': 'form-control'}}) }}
+
+     
+    {{ form_label(form.pharmacy, 'Pharmacy:', {'label_attr': {'class': 'form-label'}}) }}
+      {{ form_widget(form.pharmacy, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+
+ {{ form_label(form.instructions, 'Instructions:', {'label_attr': {'class': 'form-label'}}) }}
+      {{ form_widget(form.instructions, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+    
+      <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    </div>
+  {{ form_end(form) }}
+</div>
+
+<style>
+.form-container {
+  max-width: 750px;
+  margin: 10 auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: inline-block;
+  margin-bottom: 0.25rem;
+}
+
+.btn-primary {
+  background-color: #0dcaf0;
+  border-color: #007bff;
+  color: #fff;
+  margin-top: 20px;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+  color: #fff;
+}
+
+.form-control {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+</style>
