@@ -4,41 +4,43 @@
 {% block title %}Liste des Calendriers{% endblock %}
 
 {% block body %}
-    <h1>Liste des Calendriers <a href="{{ path('calendrier_new') }}" class="btn btn-success">Ajouter</a></h1>
+    <div class="container mt-3">
+        <h1>Liste des Calendriers <a href="{{ path('calendrier_new') }}" class="btn btn-success">Ajouter</a></h1>
 
-    {% if calendriers|length > 0 %}
-        <table>
-            <thead>
-                <tr>
-                    <th>ID calendrier</th>
-                    <th>ID Médecin</th>
-                    <th>Jours Feries</th>
-                    <th>Infos</th>
-                    <th>Diagnostique</th>
-                    
-                    <th>Action</th> 
-
-                </tr>
-            </thead>
-            <tbody>
-                {% for calendrier in calendriers %}
+        {% if calendriers|length > 0 %}
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{{ calendrier.id }}</td>
-                        <td>{{ calendrier.idMedecin }}</td>
-                        <td>{{ calendrier.jourFeries }}</td>
-                        <td>{{ calendrier.infos }}</td>
-                        <td>{{ calendrier.diagnostique }}</td>
-                        <td>
-                            <a href="{{ path('calendrier_edit', {'id': calendrier.id}) }}">Update</a>
- <form action="{{ path('calendrier_delete', {'id': calendrier.id}) }}"  class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette calendrier?')">
-                                <i class="fa fa-trash"></i> Supprimer
-                            </button>                        </td>
+                        <th>ID Calendrier</th>
+                        <th>ID Médecin</th>
+                        <th>Jours Fériés</th>
+                        <th>Infos</th>
+                        <th>Diagnostique</th>
+                        <th>Action</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Aucune calendrier disponible.</p>
-    {% endif %}
+                </thead>
+                <tbody>
+                    {% for calendrier in calendriers %}
+                        <tr>
+                            <td>{{ calendrier.id }}</td>
+                            <td>{{ calendrier.idMedecin }}</td>
+                            <td>{{ calendrier.jourFeries }}</td>
+                            <td>{{ calendrier.infos }}</td>
+                            <td>{{ calendrier.diagnostique }}</td>
+                            <td>
+                                <a href="{{ path('calendrier_edit', {'id': calendrier.id}) }}" class="btn btn-primary btn-sm">Update</a>
+                                <form action="{{ path('calendrier_delete', {'id': calendrier.id}) }}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette calendrier?')">
+                                        <i class="fa fa-trash"></i> Supprimer
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="alert alert-info">Aucun calendrier disponible</p>
+        {% endif %}
+    </div>
 {% endblock %}

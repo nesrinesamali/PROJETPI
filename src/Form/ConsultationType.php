@@ -19,7 +19,6 @@ class ConsultationType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => true,
             ])
-            ->add('duree')
             ->add('diagnostique')
             ->add('recommandations')
            

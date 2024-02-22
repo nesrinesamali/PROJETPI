@@ -1,18 +1,48 @@
 {# templates/consultation/form.html.twig #}
 
-{% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Add Consultation</h1>
 
     {{ form_start(form) }}
-    {{ form_row(form.idMedecin) }}
-    {{ form_row(form.idPatients) }}
-    {{ form_row(form.date, {'widget': 'single_text', 'attr': {'class': 'datepicker'}}) }}
-    {{ form_row(form.duree) }}
-    {{ form_row(form.diagnostique) }}
-    {{ form_row(form.recommandations) }}
 
-    <button type="submit">Submit</button>
+    <div class="mb-3">
+        <label for="{{ form.idMedecin.vars.id }}" class="form-label">ID Médecin</label>
+        {{ form_widget(form.idMedecin, {'attr': {'class': 'form-control'}, 'required': true}) }}
+        {{ form_errors(form.idMedecin) }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.idPatients.vars.id }}" class="form-label">ID Patients</label>
+        {{ form_widget(form.idPatients, {'attr': {'class': 'form-control'}, 'required': true}) }}
+        {{ form_errors(form.idPatients) }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date.vars.id }}" class="form-label">Date</label>
+        {{ form_widget(form.date, {'attr': {'class': 'form-control datepicker'}, 'required': true}) }}
+        {{ form_errors(form.date) }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.diagnostique.vars.id }}" class="form-label">Diagnostique</label>
+        {{ form_widget(form.diagnostique, {'attr': {'class': 'form-control'}, 'required': true}) }}
+        {{ form_errors(form.diagnostique) }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.recommandations.vars.id }}" class="form-label">Recommandations</label>
+        {{ form_widget(form.recommandations, {'attr': {'class': 'form-control'}, 'required': true}) }}
+        {{ form_errors(form.recommandations) }}
+    </div>
+
+    <div class="mb-3">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{{ path('consultation_index') }}" class="btn btn-secondary me-md-2">
+                <i class="fas fa-arrow-left"></i> Back to list
+            </a>
+            <button type="submit" class="btn btn-primary">{{ button_label }}</button>
+        </div>
+    </div>
+
     {{ form_end(form) }}
 {% endblock %}

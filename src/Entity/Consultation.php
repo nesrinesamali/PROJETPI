@@ -34,11 +34,7 @@ class Consultation
      */
     private $date;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $duree;
-
+   
     /**
      * @ORM\Column(type="text")
      */

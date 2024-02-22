@@ -1,3 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+
+calendrier_new:
+    path: /calendrier/new
+    controller: App\Controller\CalendrierController::new
+    methods: ['GET', 'POST']

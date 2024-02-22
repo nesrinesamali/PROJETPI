@@ -1,0 +1,35 @@
+/* public/css/styles.css */
+/* Additional styling for the table */
+.table-responsive {
+    margin-top: 20px;
+}
+
+table.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    background-color: #fff;
+    border-collapse: collapse;
+}
+
+table.table th,
+table.table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+table.table th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+table.table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Button styling */
+.btn-primary,
+.btn-danger {
+    margin-right: 5px;
+}

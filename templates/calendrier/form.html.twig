@@ -1,16 +1,60 @@
 {# templates/consultation/form.html.twig #}
 
-{% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Add calendrier</h1>
 
     {{ form_start(form) }}
-    {{ form_row(form.idMedecin) }}
-    {{ form_row(form.jourFeries) }}
-    {{ form_row(form.infos) }}
-    {{ form_row(form.diagnostique) }}
 
-    <button type="submit">Submit</button>
+    <div class="mb-3">
+  {{ form_label(form.idMedecin, 'idMedecin', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.idMedecin, {'attr': {'class': 'form-control', ' oninput': 'showAlert(this, "id-alert")'}}) }}
+  <div class="alert-danger mt-2" id="nom-alert" style="display:none;">Le id ne peut contenir que des chiffres.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.jourFeries.vars.id }}" class="form-label">jours Feries</label>
+        {{ form_widget(form.jourFeries, {'attr': {'class': 'form-control'}, 'required': true}) }}
+        {{ form_errors(form.jourFeries) }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.infos.vars.id }}" class="form-label">infos</label>
+        {{ form_widget(form.infos, {'attr': {'class': 'form-control infospicker'}, 'required': true}) }}
+        {{ form_errors(form.infos) }}
+    </div>
+
+    
+
+    <div class="mb-3">
+        <label for="{{ form.diagnostique.vars.id }}" class="form-label">Diagnostique</label>
+        {{ form_widget(form.diagnostique, {'attr': {'class': 'form-control '}, 'required': true}) }}
+        {{ form_errors(form.diagnostique) }}
+    </div>
+
+    <div class="mb-3">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{{ path('consultation_index') }}" class="btn btn-secondary me-md-2">
+                <i class="fas fa-arrow-left"></i> Back to list
+            </a>
+            <button type="submit" class="btn btn-primary">{{ button_label }}</button>
+        </div>
+    </div>
+
     {{ form_end(form) }}
-{% endblock %}
+<script>
+  function showAlert(inputField, alertId) {
+    let alertElement = document.getElementById(alertId);
+    let inputValue = inputField.value;
+    let isValid = inputField.checkValidity();
+    if (isValid) {
+      alertElement.style.display = 'none';
+      inputField.classList.add('is-valid');
+      inputField.classList.remove('is-invalid');
+    } else {
+      alertElement.style.display = 'block';
+      inputField.classList.add('is-invalid');
+      inputField.classList.remove('is-valid');
+    }
+  }
+
+  
+</script>

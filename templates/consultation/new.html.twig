@@ -1,3 +1,4 @@
+{# templates/consultation/new.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -11,9 +12,8 @@
           </div>
           <div class="card-body">
             {{ include('consultation/form.html.twig', {'button_label': 'Add'}) }}
-            <hr>
             
-            <a href="{{ path('consultation_index') }}" class="btn btn-secondary mt-3"><i class="fas fa-arrow-left"></i> Back to list</a>
+           
           </div>
         </div>
       </div>
