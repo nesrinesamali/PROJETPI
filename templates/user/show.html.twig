@@ -1,0 +1,59 @@
+{% extends 'dashboard/front.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>User index</h1>
+
+        <!-- Tableau des utilisateurs -->
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Password</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Typemaladie</th>
+                    <th>Specialite</th>
+                    <th>Groupesanguin</th>
+                    <th>Statuteligibilite</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                        <td>{{ user.password }}</td>
+                        <td>{{ user.nom }}</td>
+                        <td>{{ user.prenom }}</td>
+                        <td>{{ user.typemaladie }}</td>
+                        <td>{{ user.specialite }}</td>
+                        <td>{{ user.groupesanguin }}</td>
+                        <td>{{ user.statuteligibilite }}</td>
+                        <td>
+                            <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                            <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="11">no records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Boutons de connexion et d'inscription -->
+        <div class="text-center">
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Sign in</a>
+            <a href="{{ path('app_register') }}" class="btn btn-success">Sign up</a>
+        </div>
+    </div>
+{% endblock %}
