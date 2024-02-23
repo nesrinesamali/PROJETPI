@@ -3,9 +3,11 @@
     <div class="form-group">
       {{ form_label(form.patient, 'Patient:', {'label_attr': {'class': 'form-label'}}) }}
       {{ form_widget(form.patient, {'attr': {'class': 'form-control'}}) }}
+      {{ form_errors(form.patient) }}
 
       {{ form_label(form.doctor, 'Doctor:', {'label_attr': {'class': 'form-label'}}) }}
       {{ form_widget(form.doctor, {'attr': {'class': 'form-control'}}) }}
+      {{ form_errors(form.patient) }}
 
       {{ form_label(form.date, 'Date:', {'label_attr': {'class': 'form-label'}}) }}
       {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}

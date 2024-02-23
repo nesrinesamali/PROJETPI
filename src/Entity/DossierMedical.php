@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\DossierMedicalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DossierMedicalRepository::class)]
 class DossierMedical
@@ -15,9 +18,13 @@ class DossierMedical
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 3)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z\s]*$/')]
     private ?string $patient = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 3)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z\s]*$/')]
     private ?string $doctor = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -28,6 +35,14 @@ class DossierMedical
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $test = null;
+
+    #[ORM\OneToMany(targetEntity: Prescription::class, mappedBy: 'dossierMedical')]
+    private Collection $Prescription;
+
+    public function __construct()
+    {
+        $this->Prescription = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +105,36 @@ class DossierMedical
     public function setTest(?string $test): static
     {
         $this->test = $test;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prescription>
+     */
+    public function getPrescription(): Collection
+    {
+        return $this->Prescription;
+    }
+
+    public function addPrescription(Prescription $prescription): static
+    {
+        if (!$this->Prescription->contains($prescription)) {
+            $this->Prescription->add($prescription);
+            $prescription->setDossierMedical($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrescription(Prescription $prescription): static
+    {
+        if ($this->Prescription->removeElement($prescription)) {
+            // set the owning side to null (unless already changed)
+            if ($prescription->getDossierMedical() === $this) {
+                $prescription->setDossierMedical(null);
+            }
+        }
 
         return $this;
     }

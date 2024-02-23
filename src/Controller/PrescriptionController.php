@@ -30,6 +30,7 @@ class PrescriptionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $prescription->setCreatedAt(new \DateTimeImmutable());
             $entityManager->persist($prescription);
             $entityManager->flush();
 

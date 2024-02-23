@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PrescriptionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PrescriptionRepository::class)]
 class Prescription
@@ -15,9 +16,14 @@ class Prescription
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 3)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z\s]*$/')]
+
     private ?string $patient = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 3)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z\s]*$/')]
     private ?string $doctor = null;
 
     #[ORM\Column]
@@ -31,6 +37,9 @@ class Prescription
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pharmacy = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Prescription')]
+    private ?DossierMedical $dossierMedical = null;
 
     public function getId(): ?int
     {
@@ -105,6 +114,18 @@ class Prescription
     public function setPharmacy(?string $pharmacy): static
     {
         $this->pharmacy = $pharmacy;
+
+        return $this;
+    }
+
+    public function getDossierMedical(): ?DossierMedical
+    {
+        return $this->dossierMedical;
+    }
+
+    public function setDossierMedical(?DossierMedical $dossierMedical): static
+    {
+        $this->dossierMedical = $dossierMedical;
 
         return $this;
     }

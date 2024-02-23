@@ -58,14 +58,15 @@ class DossierMedicalController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_dossier_medical_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_dossier_medical_show', [], Response::HTTP_SEE_OTHER);
         }
+        
 
         return $this->renderForm('dossier_medical/edit.html.twig', [
             'dossier_medical' => $dossierMedical,
             'form' => $form,
         ]);
+
     }
 
     #[Route('/{id}', name: 'app_dossier_medical_delete', methods: ['POST'])]
@@ -74,6 +75,10 @@ class DossierMedicalController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$dossierMedical->getId(), $request->request->get('_token'))) {
             $entityManager->remove($dossierMedical);
             $entityManager->flush();
+            $this->addFlash(
+                'notice',
+                'Your changes were saved!')
+            ;
         }
 
         return $this->redirectToRoute('app_dossier_medical_index', [], Response::HTTP_SEE_OTHER);

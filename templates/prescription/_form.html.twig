@@ -7,8 +7,9 @@
       {{ form_label(form.doctor, 'Doctor:', {'label_attr': {'class': 'form-label'}}) }}
       {{ form_widget(form.doctor, {'attr': {'class': 'form-control'}}) }}
 
-      {{ form_label(form.Created_at, 'Created at:', {'label_attr': {'class': 'form-label'}}) }}
-      {{ form_widget(form.Created_at, {'attr': {'class': 'form-control'}}) }}
+     {{ form_label(form.Created_at, 'Created at:', {'label_attr': {'class': 'form-label'}}) }}
+     {{ form_widget(form.Created_at, {'attr': {'class': 'form-control', 'placeholder': 'YYYY-MM-DD HH:MM'}}) }}
+
 
       {{ form_label(form.medications, 'Medications:', {'label_attr': {'class': 'form-label'}}) }}
       {{ form_widget(form.medications, {'attr': {'class': 'form-control'}}) }}
@@ -69,4 +70,5 @@
   border-color: #007bff;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
+
 </style>

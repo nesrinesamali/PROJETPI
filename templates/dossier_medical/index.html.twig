@@ -3,6 +3,11 @@
 {% block title %}DossierMedical index{% endblock %}
 
 {% block body %}
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
     <h1>DossierMedical index</h1>
 
     <table class="table">
@@ -39,4 +44,5 @@
     </table>
 
     <a href="{{ path('app_dossier_medical_new') }}">Create new</a>
+   
 {% endblock %}
