@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container mt-3">
-        <h1>Liste des Calendriers <a href="{{ path('calendrier_new') }}" class="btn btn-success">Ajouter</a></h1>
+        <h1>Liste des Calendriers <a href="{{ path('calendrier_new') }}" class="btn btn-success">Add</a></h1>
 
         {% if calendriers|length > 0 %}
             <table class="table table-striped">
@@ -30,7 +30,7 @@
                                 <a href="{{ path('calendrier_edit', {'id': calendrier.id}) }}" class="btn btn-primary btn-sm">Update</a>
                                 <form action="{{ path('calendrier_delete', {'id': calendrier.id}) }}" method="post" class="d-inline">
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette calendrier?')">
-                                        <i class="fa fa-trash"></i> Supprimer
+                                        <i class="fa fa-trash"></i> Delete
                                     </button>
                                 </form>
                             </td>

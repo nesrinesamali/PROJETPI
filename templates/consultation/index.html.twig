@@ -9,7 +9,7 @@
 
 {% block body %}
     <div class="container mt-3">
-        <h1>Liste des Consultations <a href="{{ path('consultation_new') }}" class="btn btn-success">Ajouter</a></h1>
+        <h1>Liste des Consultations <a href="{{ path('consultation_new') }}" class="btn btn-success">Add</a></h1>
 
         {% if consultations|length > 0 %}
             <div class="table-responsive">
@@ -35,10 +35,10 @@
                                 <td>{{ consultation.diagnostique }}</td>
                                 <td>{{ consultation.recommandations }}</td>
                                 <td>
-                                    <a href="{{ path('consultation_edit', {'id': consultation.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                                    <a href="{{ path('consultation_edit', {'id': consultation.id}) }}" class="btn btn-primary btn-sm">Update</a>
                                     <form action="{{ path('consultation_delete', {'id': consultation.id}) }}" method="post" class="d-inline">
                                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette consultation?')">
-                                            <i class="fa fa-trash"></i> Supprimer
+                                            <i class="fa fa-trash"></i> Delete
                                         </button>
                                     </form>
                                 </td>
