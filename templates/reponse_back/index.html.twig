@@ -1,0 +1,109 @@
+{% extends 'dashboard/front.html.twig' %}
+
+{% block title %}Les Réponses {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Custom styles for Response index page */
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            color: #333;
+            font-weight: bold;
+        }
+
+        td a {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        td a:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-create {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-create:hover {
+            background-color: #218838;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Reponse index</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reponse in reponses %}
+                <tr>
+                    <td>{{ reponse.id }}</td>
+                    <td>{{ reponse.date ? reponse.date|date('Y-m-d') : '' }}</td>
+                    <td>{{ reponse.description }}</td>
+                    <td>
+                        <a href="{{ path('app_reponse_back_show', {'id': reponse.id})}} "class=" btn btn-primary">Show</a>
+                        <a href="{{ path('app_reponse_back_edit', {'id': reponse.id})  }}" class=" btn btn-secondary">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        
+    </div>
+{% endblock %}

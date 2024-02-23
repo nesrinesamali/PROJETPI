@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rendezvous{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">Rendezvous</h1>
+
+        <div class="row mt-4">
+            <div class="col-md-6 offset-md-3">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="text-center">Id</th>
+                            <td class="text-center">{{ rendezvou.id }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Nom patient</th>
+                            <td class="text-center">{{ rendezvou.nompatient }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Nom médecin</th>
+                            <td class="text-center">{{ rendezvou.nommedecin }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" rowspan="2">Date</th>
+                            <td class="text-center">{{ rendezvou.date ? rendezvou.date|date('Y-m-d') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">{{ rendezvou.heure ? rendezvou.heure|date('H:i:s') : '' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-between mt-3" style="margin-bottom: 20px;">
+                    <a href="{{ path('app_rendezvous_index') }}" class="btn btn-primary">Retour à la liste</a>
+                    <a href="{{ path('app_rendezvous_edit', {'id': rendezvou.id}) }}" class="btn btn-success">Modifier</a>
+                </div>
+
+                {{ include('rendezvous/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

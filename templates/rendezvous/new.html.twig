@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Créer un Rendezvous</h1>
+
+    {{ include('rendezvous/_form.html.twig') }}
+
+    <a href="{{ path('app_rendezvous_index') }}">Back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('rendezvous_form');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Empêcher la soumission du formulaire par défaut
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Confirm adding the rendezvous",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, add it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Ajoutez un champ caché indiquant que l'action est un ajout
+                        var input = document.createElement('input');
+                        input.setAttribute('type', 'hidden');
+                        input.setAttribute('name', 'add_rendezvous');
+                        input.setAttribute('value', '1');
+                        form.appendChild(input);
+
+                        // Soumettre le formulaire après confirmation
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

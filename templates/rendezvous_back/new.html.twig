@@ -1,0 +1,11 @@
+{% extends 'dashboard/front.html.twig' %}
+
+{% block title %}New Rendezvous{% endblock %}
+
+{% block body %}
+    <h1>Create new Rendezvous</h1>
+
+    {{ include('rendezvous_back/_form.html.twig') }}
+
+    <a href="{{ path('app_rendezvous_back_index') }}">back to list</a>
+{% endblock %}

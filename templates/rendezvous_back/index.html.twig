@@ -1,0 +1,58 @@
+{% extends 'dashboard/front.html.twig' %}
+
+{% block title %}Rendezvous {% endblock %}
+
+{% block body %}
+    <h1>Rendezvous index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nompatient</th>
+                <th>Nommedecin</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Etat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rendezvous in rendezvouses %}
+            <tr>
+                <td>{{ rendezvous.id }}</td>
+                <td>{{ rendezvous.nompatient }}</td>
+                <td>{{ rendezvous.nommedecin }}</td>
+                <td>{{ rendezvous.date ? rendezvous.date|date('Y-m-d') : '' }}</td>
+                <td>{{ rendezvous.heure ? rendezvous.heure|date('H:i:s') : '' }}</td>
+                <td>{% if not rendezvous.etat %}
+                            <span style="color: red;">Non traitée</span>
+                        {% else %}
+                            <span style="color: green;">Traitée</span>
+                        {% endif %}</td>
+
+                        <td>
+                        {% if not rendezvous.etat and not rendezvous.reponse %}
+                            <a href="{{ path('app_rendezvous_back_repondre', {'id':rendezvous.id}) }}" class="btn btn-success">Répondre</a>
+                        {% elseif rendezvous.reponse %}
+                            <a href="{{ path('app_rendezvous_back_show_response', {'id': rendezvous.id}) }}" class="btn btn-primary">
+                                Voir la réponse
+                            </a>
+                        {% endif %}
+                        <a href="{{ path('app_rendezvous_back_show', {'id': rendezvous.id}) }}" class="btn btn-primary mr-2">
+                            <i class="fas fa-eye"></i> 
+                        </a>
+                    </td>
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
