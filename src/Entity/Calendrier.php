@@ -36,7 +36,7 @@ class Calendrier
     /**
      * @ORM\Column(type="text")
      */
-    private $diagnostique;
+    private $disponibilite;
 
     public function getId(): ?int
     {
@@ -79,14 +79,14 @@ class Calendrier
         return $this;
     }
 
-    public function getDiagnostique(): ?string
+    public function getDisponibilite(): ?string
     {
-        return $this->diagnostique;
+        return $this->disponibilite;
     }
 
-    public function setDiagnostique(string $diagnostique): self
+    public function setDisponibilite(string $disponibilite): self
     {
-        $this->diagnostique = $diagnostique;
+        $this->disponibilite = $disponibilite;
 
         return $this;
     }

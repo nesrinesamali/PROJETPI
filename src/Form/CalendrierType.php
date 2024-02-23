@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CalendrierType extends AbstractType
 {
@@ -18,7 +19,21 @@ class CalendrierType extends AbstractType
             ->add('idMedecin')
             ->add('jourFeries')
             ->add('infos')
-            ->add('diagnostique')
+            
+            ->add('disponibilite', ChoiceType::class, [
+                'label' => 'Disponibilité',
+                'choices' => [
+                    'Status' => '',
+                    'Disponible' => 'Disponible',
+                    'Occupé' => 'Occupé',
+                ],
+               
+                'required' => true,
+                'placeholder' => 'Status', // texte affiché avant la sélection
+            ])
+
+     
+  
         ;
     }
 

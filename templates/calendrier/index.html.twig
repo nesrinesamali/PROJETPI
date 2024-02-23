@@ -1,4 +1,3 @@
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des Calendriers{% endblock %}
@@ -15,7 +14,7 @@
                         <th>ID Médecin</th>
                         <th>Jours Fériés</th>
                         <th>Infos</th>
-                        <th>Diagnostique</th>
+                        <th>Disponibilite</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -26,7 +25,7 @@
                             <td>{{ calendrier.idMedecin }}</td>
                             <td>{{ calendrier.jourFeries }}</td>
                             <td>{{ calendrier.infos }}</td>
-                            <td>{{ calendrier.diagnostique }}</td>
+                            <td>{{ calendrier.disponibilite }}</td>
                             <td>
                                 <a href="{{ path('calendrier_edit', {'id': calendrier.id}) }}" class="btn btn-primary btn-sm">Update</a>
                                 <form action="{{ path('calendrier_delete', {'id': calendrier.id}) }}" method="post" class="d-inline">
