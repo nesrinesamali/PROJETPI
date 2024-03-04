@@ -1,3 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+generate_qr_code:
+    path: '/dossier-medical/{id}/qr-code'
+    controller: 'App\Controller\DossierMedicalController::generateQrCode'
+

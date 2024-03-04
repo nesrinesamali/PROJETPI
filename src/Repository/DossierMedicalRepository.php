@@ -21,6 +21,12 @@ class DossierMedicalRepository extends ServiceEntityRepository
         parent::__construct($registry, DossierMedical::class);
     }
 
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('a')
+        ->OrderBy('a.id','ASC')
+        ->getQuery();
+    }
 //    /**
 //     * @return DossierMedical[] Returns an array of DossierMedical objects
 //     */

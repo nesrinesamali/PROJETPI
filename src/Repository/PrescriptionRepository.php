@@ -20,7 +20,13 @@ class PrescriptionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Prescription::class);
     }
-
+ 
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('a')
+        ->OrderBy('a.id','ASC')
+        ->getQuery();
+    }
 //    /**
 //     * @return Prescription[] Returns an array of Prescription objects
 //     */

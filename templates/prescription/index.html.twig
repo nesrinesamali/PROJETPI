@@ -3,105 +3,17 @@
 {% block title %}Prescription index{% endblock %}
 
 {% block body %}
-    <style>
-    /* Style for the h1 heading */
-    h1 {
-        text-align: center;
-        color: #007bff; /* Blue color */
-        margin-bottom: 20px; /* Add some space below the heading */
-    }
-
-    /* Style for the table */
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table th,
-    .table td {
-        padding: 8px;
-        border-bottom: 1px solid #dee2e6; /* Border color */
-    }
-
-    .table th {
-        background-color: #f8f9fa; /* Table header background color */
-        font-weight: bold;
-        text-align: left;
-    }
-
-    .table td {
-        text-align: left;
-    }
-
-    /* Style for table actions */
-    .table a {
-        color: #007bff; /* Link color */
-        text-decoration: none;
-        margin-right: 10px; /* Add space between links */
-    }
-
-    .table a:hover {
-        text-decoration: underline; /* Underline on hover */
-    }
-    .create{
-        display: inline-block;
-        width: 140px; /* Set the width of the button */
-        height: 45px; /* Set the height of the button */
-        padding: 10px 20px; /* Set the padding inside the button */
-        font-size: 18px;
-        background-color: #007bff; /* Blue color */
-        color: #ffffff;
-        border: none;
-        border-radius: 6px;
-        text-decoration: none; /* Remove default link underline */
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-    } 
-     .create1{
-        display: inline-block;
-        width: 50px; /* Set the width of the button */
-        height: 30px; /* Set the height of the button */
-        padding: 5px 10px; /* Set the padding inside the button */
-        font-size: 13px;
-        background-color: #007bff; /* Blue color */
-        color: #ffffff;
-        border: none;
-        border-radius: 6px;
-        text-decoration: none; /* Remove default link underline */
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-    }
- .create2{
-        display: inline-block;
-        width: 50px; /* Set the width of the button */
-        height: 30px; /* Set the height of the button */
-        padding: 5px 10px; /* Set the padding inside the button */
-        font-size: 13px;
-        background-color: #ff3333; /* Blue color */
-        color: #ffffff;
-        border: none;
-        border-radius: 6px;
-        text-decoration: none; /* Remove default link underline */
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-    }
-
-    .create:hover {
-        background-color: #0056b3; 
-        color: white;/* Darker shade of blue on hover */
-    }
-    .create1:hover {
-        background-color: #0056b3; 
-        color: white;/* Darker shade of blue on hover */
-    }
-    .create2:hover {
-        background-color: #990000; 
-        color: white;/* Darker shade of blue on hover */
-    }
-</style>
+    
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+{% for message in app.flashes('delete') %}
+    <div class="flash-delete">
+        {{ message }}
+    </div>
+{% endfor %}
 
 <h1>Prescription index</h1>
 
@@ -119,7 +31,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for prescription in prescriptions %}
+    {% for prescription in pagination %}
         <tr>
             <td>{{ prescription.id }}</td>
             <td>{{ prescription.patient }}</td>
@@ -129,8 +41,8 @@
             <td>{{ prescription.instructions }}</td>
             <td>{{ prescription.pharmacy }}</td>
             <td>
-               <div class=create1> <a href="{{ path('app_prescription_show', {'id': prescription.id}) }}">show</a></div>
-               <div class=create2> <a href="{{ path('app_prescription_edit', {'id': prescription.id}) }}">edit</a>
+               <div> <a href="{{ path('app_prescription_show', {'id': prescription.id}) }}"class="btn btn-primary">show</a></div>
+               <div> <a href="{{ path('app_prescription_edit', {'id': prescription.id}) }}"class="btn btn-info">edit</a>
             </div></td>
         </tr>
     {% else %}
@@ -140,9 +52,140 @@
     {% endfor %}
     </tbody>
 </table>
-<div class=create>
+ <div class="pagination-container">
+    {{ knp_pagination_render(pagination) }}
+</div>
+<div class="btn btn-new">
 <a href="{{ path('app_prescription_new') }}">Create new</a>
 </div>
 
+  <style>
+    /* Style for the h1 heading */
+    h1 {
+        text-align: center;
+        color: #0dcaf0; 
+        margin-bottom: 20px; /* Add some space below the heading */
+    }
+
+    /* Style for the table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px;
+        border-bottom: 3px solid #dee2e6; /* Border color */
+    }
+
+    .table th {
+        background-color: #0dcaf0; /* Table header background color */
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .table td {
+        text-align: left;
+    }
+    .flash-notice{ 
+        background-color: green;
+        color: white;
+         padding: 10px 20px;
+         text-align: center;
+    }
+    .flash-delete{
+        background-color: red;
+        color: white;
+         padding: 10px 20px;
+         text-align: center;
+    }
+    /* Style for table actions */
+    .table a {
+       /*color: #007bff;  Link color */
+        text-decoration: none;
+        margin-right: 10px; /* Add space between links */
+    }
+
     
+    
+     
+ .btn {
+            margin: 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+        }
+
+        .btn-info:hover {
+            background-color: #117a8b;
+        }
+
+    .btn-new:hover {
+        background-color: #0dcaf0; 
+        color: white;/* Darker shade of blue on hover */
+    }
+    .pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination {
+    color: black;
+    text-decoration: none;
+    padding: 8px 15px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination li {
+    margin-right: 10px;
+}
+
+.pagination li a,
+.pagination a {
+    color: #333;
+    padding: 12px 22px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #f0f0f0;
+}
+
+.pagination a.active  {
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #0dcaf0;
+    color: #fff;
+}
+
+.pagination  a:hover {
+    background-color: #0dcaf0;
+    color: #fff;
+}
+    </style>
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Prescription;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,11 +15,11 @@ class PrescriptionType extends AbstractType
         $builder
             ->add('patient')
             ->add('doctor')
-            ->add('Created_at')
+            ->add('Created_at',DateType::class ,['widget'=>'single_text'])
             ->add('medications')
             ->add('instructions')
             ->add('pharmacy')
-        ;
+                 ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        /* Define your styles for the PDF here */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+    <center><h1>Users List</h1></center>
+    <table>
+        <thead> <!-- Modification: changer la couleur en vert -->
+            <tr>
+             
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Diagnosis</th>
+                <th>Test</th>
+                <th>Prescription</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+             {% for dossier_medical in dossier_medicals %}
+            <tr>
+                <td>{{ dossier_medical.id }}</td>
+                <td>{{ dossier_medical.patient }}</td>
+                <td>{{ dossier_medical.doctor }}</td>
+                <td>{{ dossier_medical.date ? dossier_medical.date|date('Y-m-d') : '' }}</td>
+                <td>{{ dossier_medical.diagnosis }}</td>
+                <td>{{ dossier_medical.test }}</td>
+                <td>
+            {% else %}
+                <tr>
+                    <td colspan="10" >No records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+

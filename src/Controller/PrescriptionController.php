@@ -6,6 +6,7 @@ use App\Entity\Prescription;
 use App\Form\PrescriptionType;
 use App\Repository\PrescriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrescriptionController extends AbstractController
 {
     #[Route('/', name: 'app_prescription_index', methods: ['GET'])]
-    public function index(PrescriptionRepository $prescriptionRepository): Response
+    public function index(PrescriptionRepository $prescriptionRepository, Request $request, PaginatorInterface $Paginator): Response
     {
+        $prescriptions = $prescriptionRepository->findAll();
+        $pagination = $Paginator->paginate(
+            $prescriptionRepository->paginationQuery(),
+            $request->query->getInt('page', 1) , 
+            5/* page number */
+        );
         return $this->render('prescription/index.html.twig', [
-            'prescriptions' => $prescriptionRepository->findAll(),
+            
+            'pagination' => $pagination
         ]);
     }
 
@@ -30,9 +38,13 @@ class PrescriptionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $prescription->setCreatedAt(new \DateTimeImmutable());
+            $prescription->setCreatedAt(new \DateTime());
             $entityManager->persist($prescription);
             $entityManager->flush();
+            $this->addFlash(
+                'notice',
+                'Prescription added successfully')
+            ;
 
             return $this->redirectToRoute('app_prescription_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -75,6 +87,11 @@ class PrescriptionController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$prescription->getId(), $request->request->get('_token'))) {
             $entityManager->remove($prescription);
             $entityManager->flush();
+            $this->addFlash(
+                'delete',
+                'Prescription Deleted')
+            ;
+        
         }
 
         return $this->redirectToRoute('app_prescription_index', [], Response::HTTP_SEE_OTHER);

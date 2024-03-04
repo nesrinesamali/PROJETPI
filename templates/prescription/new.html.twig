@@ -3,7 +3,7 @@
 {% block title %}New Prescription{% endblock %}
 
 {% block body %}
-
+<div class="hero-header">
     <div class="content-container">
         <h1 class="page-title">Create new Prescription</h1>
 
@@ -11,6 +11,7 @@
 
         <a href="{{ path('app_prescription_index') }}" class="back-link">Back to List</a>
     </div>
+ </div>
 
 <style>
     .page-title{
@@ -22,6 +23,7 @@
         padding: 35px;
         color: #0dcaf0;
         background-color: #1D2A4D;
+        
     }
     
 
@@ -51,6 +53,10 @@
         font-family: 'Open Sans', sans-serif;
         font-weight: bold;
         margin-top: 35px;
-    }        
+    }      
+    .hero-header {
+    background: url(../img/hero.jpg) top right no-repeat;
+    background-size: cover;
+}  
 </style>
 {% endblock %}

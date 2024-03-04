@@ -30,6 +30,7 @@ class DossierMedical
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[Assert\Length(min: 10)]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $diagnosis = null;
 
@@ -138,5 +139,4 @@ class DossierMedical
 
         return $this;
     }
-    
 }

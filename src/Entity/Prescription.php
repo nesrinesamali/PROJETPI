@@ -27,7 +27,7 @@ class Prescription
     private ?string $doctor = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $Created_at = null;
+    private ?\DateTime $Created_at = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $medications = null;
@@ -70,12 +70,12 @@ class Prescription
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->Created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $Created_at): static
+    public function setCreatedAt(\DateTime $Created_at): static
     {
         $this->Created_at = $Created_at;
 

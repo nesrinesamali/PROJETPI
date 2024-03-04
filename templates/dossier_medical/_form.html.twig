@@ -17,7 +17,6 @@
 
       {{ form_label(form.test, 'Test:', {'label_attr': {'class': 'form-label'}}) }}
       {{ form_widget(form.test, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
-
       <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
     </div>
   {{ form_end(form) }}
@@ -28,7 +27,7 @@
   max-width: 500px;
   margin: 0 auto;
   padding: 2rem;
-  border: 1px solid #ddd;
+  border: 0px solid #ddd;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -43,6 +42,7 @@
 }
 
 .btn-primary {
+  margin-top: 20;
   background-color: #007bff;
   border-color: #007bff;
   color: #fff;
