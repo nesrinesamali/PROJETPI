@@ -1,0 +1,83 @@
+{% extends 'dashboard/front.html.twig' %}
+
+
+{% block body %}
+
+	<!-- Section pour afficher la liste des dons -->
+	<section class="section">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card" style="width:1200px">
+					<div
+						class="card-body">
+						<!-- Table with stripped rows -->
+						<table class="table table-striped datatable">
+                           
+							<thead>
+                                <div class="col-sm-7">
+                                    <div class="d-flex justify-content-end">
+                                        <a href="{{ path('app_centre_don_new') }} " class="btn btn-outline-success">
+                                            <i class="bi bi-person-add"></i>Ajout</a>
+                                            <a href="{{ path('export_product_to_pdf') }}" class="btn btn-outline-dark mx-2">
+                                                <i class="bi bi-file-pdf"></i>
+                                                PDF</a>
+                                        </div>
+                                    </div>
+								<tr>
+									<th>Id</th>
+									<th>NomCentre</th>
+									<th>DateOuverture</th>
+									<th>Datefermeture</th>
+									<th>Gouvernorat</th>
+									<th>Adresse</th>
+									<th>Email</th>
+									<th>Numero</th>
+									<th>actions</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								{% for centre_don in centre_dons %}
+									<tr>
+										<td>{{ centre_don.id }}</td>
+										<td>{{ centre_don.NomCentre }}</td>
+										<td>{{ centre_don.DateOuverture ? centre_don.DateOuverture|date('H:i:s') : '' }}</td>
+										<td>{{ centre_don.datefermeture ? centre_don.datefermeture|date('H:i:s') : '' }}</td>
+										<td>{{ centre_don.gouvernorat }}</td>
+										<td>{{ centre_don.adresse }}</td>
+										<td>{{ centre_don.email }}</td>
+										<td>{{ centre_don.Numero }}</td>
+										<td>
+											<div class="btn-group" role="group" aria-label="Basic outlined example">
+												<div class="button-wrapper">
+													<a href="{{ path('app_centre_don_show', {'id': centre_don.id}) }} " class="btn btn-outline-primary"><i class="bi bi-eye"></i></a>
+												</div>
+												<div class="button-wrapper">
+													<a href="{{ path('app_centre_don_edit', {'id': centre_don.id}) }}" class="btn btn-outline-primary"><i class="bi bi-pen"></i></a>
+												</div>
+											</div>
+										</td>
+									</tr>
+								{% else %}
+									<tr>
+										<td colspan="9">no records found</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+                           
+						</table>
+						<!-- End Table with stripped rows -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+		<!-- JavaScript DataTables -->
+
+		<script>
+			$(document).ready(function () {
+$('.datatable').DataTable();
+});
+		</script>
+	{% endblock %}

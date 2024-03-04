@@ -1,5 +1,9 @@
+# config/packages/twig.yaml
+
 twig:
     default_path: '%kernel.project_dir%/templates'
+    form_themes:
+        - 'bootstrap_4_layout.html.twig'  # Exemple de thème Twig pour Bootstrap 4
 
 when@test:
     twig:

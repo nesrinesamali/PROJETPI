@@ -1,0 +1,152 @@
+{% extends 'dashboard/front.html.twig' %}
+{% block body %}
+<section class="section">
+    <div class="row" style="width:150%">
+        <div class="col-lg-4">
+            <!-- Chart 1 -->
+            <div class="card">
+                <div class="card-body pb-0">
+                    <h5 class="card-title">Genre</h5>
+                    <div id="trafficChart1" style="min-height: 500px; min-width:400px" class="echart"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            echarts.init(document.querySelector("#trafficChart1")).setOption({
+                                tooltip: {
+                                    trigger: 'item'
+                                },
+                                legend: {
+                                    top: '5%',
+                                    left: 'center'
+                                },
+                                series: [{
+                                    name: 'Access From',
+                                    type: 'pie',
+                                    radius: ['40%', '70%'],
+                                    avoidLabelOverlap: false,
+                                    label: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                    emphasis: {
+                                        label: {
+                                            show: true,
+                                            fontSize: '18',
+                                            fontWeight: 'bold'
+                                        }
+                                    },
+                                    labelLine: {
+                                        show: false
+                                    },
+                                    data: [
+                                        { value: {{masc}}, name: 'HOMME' },
+                                        { value: {{fem}}, name: 'FEMME' },
+                                    ]
+                                }]
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <!-- Chart 2 -->
+            <div class="card">
+                <div class="card-body pb-0">
+                    <h5 class="card-title">Type Dons</h5>
+                    <div id="trafficChart2" style="min-height: 500px; min-width:400px" class="echart"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            echarts.init(document.querySelector("#trafficChart2")).setOption({
+                                tooltip: {
+                                    trigger: 'item'
+                                },
+                                legend: {
+                                    top: '5%',
+                                    left: 'center'
+                                },
+                                series: [{
+                                    name: 'Access From',
+                                    type: 'pie',
+                                    radius: ['40%', '70%'],
+                                    avoidLabelOverlap: false,
+                                    label: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                    emphasis: {
+                                        label: {
+                                            show: true,
+                                            fontSize: '18',
+                                            fontWeight: 'bold'
+                                        }
+                                    },
+                                    labelLine: {
+                                        show: false
+                                    },
+                                    data: [
+                                        { value: {{sang}}, name: 'sang' },
+                                        { value: {{plasma}}, name: 'plasma' },
+                                        { value: {{plaquette}}, name: 'plaquettes' }
+                                    ]
+                                }]
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <!-- Chart 3 -->
+            <div class="card">
+                <div class="card-body pb-0">
+                    <h5 class="card-title">Groupe sanguin</h5>
+                    <div id="trafficChart3" style="min-height: 500px; min-width:400px" class="echart"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            echarts.init(document.querySelector("#trafficChart3")).setOption({
+                                tooltip: {
+                                    trigger: 'item'
+                                },
+                                legend: {
+                                    top: '5%',
+                                    left: 'center'
+                                },
+                                series: [{
+                                    name: 'Access From',
+                                    type: 'pie',
+                                    radius: ['40%', '70%'],
+                                    avoidLabelOverlap: false,
+                                    label: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                    emphasis: {
+                                        label: {
+                                            show: true,
+                                            fontSize: '18',
+                                            fontWeight: 'bold'
+                                        }
+                                    },
+                                    labelLine: {
+                                        show: false
+                                    },
+                                    data: [
+                                        { value: {{Apos}}, name: 'A+' },
+                                        { value: {{Aneg}}, name: 'A-' },
+                                        { value: {{Bpos}}, name: 'B+' },
+                                        { value: {{Bneg}}, name: 'B-' },
+                                        { value: {{ABpos}}, name: 'AB+' },
+                                        { value: {{ABneg}}, name: 'AB-' },
+                                        { value: {{opos}}, name: 'O+' },
+                                        { value: {{oneg}}, name: 'O-' },
+                                    ]
+                                }]
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

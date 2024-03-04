@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CentreDon{% endblock %}
+
+{% block body %}
+    <h1>CentreDon</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ centre_don.id }}</td>
+            </tr>
+            <tr>
+                <th>NomCentre</th>
+                <td>{{ centre_don.NomCentre }}</td>
+            </tr>
+            <tr>
+                <th>DateOuverture</th>
+                <td>{{ centre_don.DateOuverture ? centre_don.DateOuverture|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Datefermeture</th>
+                <td>{{ centre_don.datefermeture ? centre_don.datefermeture|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Gouvernorat</th>
+                <td>{{ centre_don.gouvernorat }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ centre_don.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ centre_don.email }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ centre_don.Numero }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_centre_don_back_index') }}">back to list</a>
+
+    <a href="{{ path('app_centre_don_back_edit', {'id': centre_don.id}) }}">edit</a>
+
+    {{ include('centre_don_back/_delete_form.html.twig') }}
+{% endblock %}

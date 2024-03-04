@@ -1,0 +1,82 @@
+{% extends 'dashboard/front.html.twig' %}
+
+
+{% block body %}
+
+
+	<!-- Section pour afficher la liste des dons -->
+	<section class="section">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card" style="width:1050px">
+					<div
+						class="card-body">
+                    
+						<!-- Table with stripped rows -->
+						<table class="table table-striped datatable">
+                            <div class="col-sm-7 mt-3">
+                                <div class="d-flex justify-content-end">
+                            <a href="{{ path('app_dons_new') }}" class="btn btn-outline-success" ><i class="bi bi-person-add"></i>Ajout</a>
+                            <a href="{{ path('export_product_to_pdf') }}" class="btn btn-outline-dark mx-2">
+                                <i class="bi bi-file-pdf"></i> PDF
+                            </a>
+                            </div>
+                            </div>
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>DateDon</th>
+									<th>Datedernierdon</th>
+									<th>Genre</th>
+									<th>GroupeSanguin</th>
+									<th>Etatmarital</th>
+									<th>Typededon</th>
+									<th>Cin</th>
+									<th>actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for don in dons %}
+									<tr>
+										<td>{{ don.id }}</td>
+										<td>{{ don.DateDon ? don.DateDon|date('Y-m-d H:i:s') : '' }}</td>
+										<td>{{ don.datedernierdon ? don.datedernierdon|date('Y-m-d') : '' }}</td>
+										<td>{{ don.genre }}</td>
+										<td>{{ don.GroupeSanguin }}</td>
+										<td>{{ don.Etatmarital }}</td>
+										<td>{{ don.typededon }}</td>
+										<td>{{ don.Cin }}</td>
+										<td>
+											<div class="btn-group" role="group" aria-label="Basic outlined example">
+												<div class="button-wrapper">
+													<a href="{{ path('app_dons_show', {'id': don.id}) }}" class="btn btn-outline-primary"><i class="bi bi-eye"></i></a>
+												</div>
+												<div class="button-wrapper">
+													<a href="{{ path('app_dons_edit', {'id': don.id}) }}" class="btn btn-outline-primary"><i class="bi bi-pen"></i></a>
+												</div>
+											</td>
+										</td>
+									</tr>
+								{% else %}
+									<tr>
+										<td colspan="9">no records found</td>
+									</tr>
+								{% endfor %}
+
+							</tbody>
+						</table>
+						<!-- End Table with stripped rows -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+    
+	<!-- JavaScript DataTables -->
+	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function () {
+$('.datatable').DataTable();
+});
+	</script>
+{% endblock %}

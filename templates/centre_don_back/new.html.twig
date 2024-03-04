@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CentreDon{% endblock %}
+
+{% block body %}
+    <h1>Create new CentreDon</h1>
+
+    {{ include('centre_don_back/_form.html.twig') }}
+
+    <a href="{{ path('app_centre_don_back_index') }}">back to list</a>
+{% endblock %}

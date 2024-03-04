@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            color: red; /* Set th text color to red */
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .category-column {
+            width: 20%;
+        }
+
+        .price-column {
+            width: 15%;
+        }
+
+        .description-column {
+            width: 35%;
+        }
+
+        .name-column {
+            width: 20%;
+        }
+
+        .currency {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>dons List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>DateDon</th>
+        <th>Datedernierdon</th>
+        <th>Genre</th>
+        <th>GroupeSanguin</th>
+        <th>Etatmarital</th>
+        <th>Typededon</th>
+        <th>Cin</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for don in dons %}
+            <tr>
+                <td>{{ don.id }}</td>
+                <td>{{ don.DateDon ? don.DateDon|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ don.datedernierdon ? don.datedernierdon|date('Y-m-d') : '' }}</td>
+                <td>{{ don.genre }}</td>
+                <td>{{ don.GroupeSanguin }}</td>
+                <td>{{ don.Etatmarital }}</td>
+                <td>{{ don.typededon }}</td>
+                <td>{{ don.Cin }}</td>
+            </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
