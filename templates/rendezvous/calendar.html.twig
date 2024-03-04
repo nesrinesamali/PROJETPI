@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Liste de vos rendez vous </th>
+                      
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rendezvou in rendezvou %}
+                        <tr>
+                            <td>
+                                <strong class="highlight">{{ rendezvou.nompatient }}</strong> vous avez un rendez vous chez docteur   <strong class="highlight">{{ rendezvou.nommedecin }}</strong>
+                            </td>
+                          <td>  <button id="deleteButton" class="btn btn-danger">payer</button></td>
+                        </tr>
+                    {% endfor %}
+
+                    <!DOCTYPE html>
+
+                </tbody>
+            </table>
+
+            {% if rendezvou|length == 0 %}
+                <p class="text-center mt-4">No trajects found for {{ rendezvou.nompatient }}</p>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <div id="mini-calendar"></div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var events = [
+                        {% for rendezvou in rendezvou %}
+                            {
+                                title: '{{ rendezvou.nompatient }} to {{ rendezvou.nommedecin }}',
+                                start: '{{ rendezvou.date|date('Y-m-d') }}T{{ rendezvou.heure|date('H:i:s') }}',
+                                allDay: false
+                            },
+                        {% endfor %}
+                    ];
+
+                    $('#mini-calendar').fullCalendar({
+                        events: events,
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay'
+                        },
+                        editable: false, 
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>
+
+
+   
+
+{% endblock %}

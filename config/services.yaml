@@ -20,5 +20,10 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    # Définition du service StripeService
+    App\Service\StripeService:
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $secretKey: '%env(STRIPE_SECRET_KEY_TEST)%' # Utilisez la clé secrète de l'environnement de test
+# config/routes.yaml

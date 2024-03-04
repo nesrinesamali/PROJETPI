@@ -98,11 +98,14 @@ class Rendezvous
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
-    {
+    public function setDate(?\DateTimeInterface $date): static
+{
+    if ($date !== null) {
         $this->date = $date;
-        return $this;
     }
+    return $this;
+}
+
 
     public function getHeure(): ?\DateTimeInterface
     {

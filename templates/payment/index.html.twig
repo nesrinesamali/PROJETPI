@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ <form id="payment-form">
+    <div id="card-element"></div>
+    <button id="submit">Payer</button>
+</form>
+
+<script>
+  const stripe = Stripe('your-publishable-api-key');
+
+  var stripe = Stripe('pk_test_51OpXq5CHaNPxT50k0P4ijwWQDPizW23wbbktH4wZcAeuU3JOJrbXeCcKjQWpJVwlwmnKc7XtPctCKUf4CG3CSqhV00CNzx5SJF');
+  var elements = stripe.elements();
+  var cardElement = elements.create('card');
+  cardElement.mount('#card-element');
+
+  var form = document.getElementById('payment-form');
+  form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      stripe.confirmCardPayment('{{ paymentIntent.client_secret }}', {
+          payment_method: {
+              card: cardElement,
+          }
+      }).then(function(result) {
+          if (result.error) {
+              console.error(result.error.message);
+          } else {
+              window.location.href = '/payment/success';
+          }
+      });
+  });
+</script>
+{% endblock %}

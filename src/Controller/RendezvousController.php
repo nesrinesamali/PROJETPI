@@ -10,11 +10,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Service\StripeService as StripeServiceAlias;
 
+use App\Service\StripeService;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+use App\Service\RendezVousManager;
+use StripeService as GlobalStripeService;
 
 #[Route('/rendezvous')]
 class RendezvousController extends AbstractController
+
+
 {
+  
+
     #[Route('/', name: 'app_rendezvous_index', methods: ['GET'])]
     public function index(RendezvousRepository $rendezvousRepository): Response
     {
@@ -22,7 +34,13 @@ class RendezvousController extends AbstractController
             'rendezvouses' => $rendezvousRepository->findAll(),
         ]);
     }
-
+#[Route('/calendar/{id}', name: 'app_rendezvous_calendar', methods: ['GET'])]
+public function calendar(RendezvousRepository $rendezvousRepository): Response
+{
+    return $this->render('rendezvous/calendar.html.twig', [
+        'rendezvou' => $rendezvousRepository->findAll(),
+    ]);
+}
     #[Route('/new', name: 'app_rendezvous_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -31,6 +49,16 @@ class RendezvousController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+
+            $content = $rendezvou->getNompatient();
+            $cleanedContenu = \ConsoleTVs\Profanity\Builder::blocker($content)->filter();
+            $rendezvou->setnompatient($cleanedContenu);
+
+       
+        
+
             $entityManager->persist($rendezvou);
             $entityManager->flush();
             $this->addFlash('success', 'Rendezvous added successfully.');
@@ -82,6 +110,9 @@ class RendezvousController extends AbstractController
 
         return $this->redirectToRoute('app_rendezvous_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
+    
    
     }
 

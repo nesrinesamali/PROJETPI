@@ -12,13 +12,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/rendezvous/back')]
 class RendezvousBackController extends AbstractController
 {
     #[Route('/', name: 'app_rendezvous_back_index', methods: ['GET'])]
-    public function index(RendezvousRepository $rendezvousRepository): Response
+    public function index(RendezvousRepository $rendezvousRepository,PaginatorInterface $paginator,Request $request): Response
     {
+
+        $reclamationsQuery = $rendezvousRepository->createQueryBuilder('r')
+        ->orderBy('r.date', 'DESC')
+        ->getQuery();
+
+    
+        $pagination = $paginator->paginate(
+            $reclamationsQuery, 
+            $request->query->getInt('page', 1), 
+            2
+        );
+        return $this->render('rendezvous_back/index.html.twig', [
+            'pagination' => $pagination,
+        ]);
         return $this->render('rendezvous_back/index.html.twig', [
             'rendezvouses' => $rendezvousRepository->findAll(),
         ]);

@@ -57,23 +57,30 @@ class RendezvousType extends AbstractType
         ]);
     }
     public function validateDateAndTime($value, ExecutionContextInterface $context)
-    {
-        // Récupérer la date et l'heure sélectionnées
-        $selectedDate = $value;
-        $selectedTime = $context->getRoot()->get('heure')->getData();
+{
+    // Récupérer tous les rendez-vous existants
+    $reservationRepository = $this->entityManager->getRepository(Rendezvous::class);
+    $existingReservations = $reservationRepository->findAll();
 
-        // Vérifier si un rendez-vous existe déjà pour la même date et la même heure
-        $reservationRepository = $this->entityManager->getRepository(Rendezvous::class);
-        $existingReservation = $reservationRepository->findOneBy([
-            'date' => $selectedDate,
-            'heure' => $selectedTime,
-        ]);
+    // Récupérer la date et l'heure sélectionnées
+    $selectedDate = $value;
+    $selectedTime = $context->getRoot()->get('heure')->getData();
 
-        // Si un rendez-vous existe, ajouter une violation
-        if ($existingReservation) {
-            $context->buildViolation('Un rendez-vous existe déjà pour cette date et cette heure.')
+    // Combine the selected date and time
+    $selectedDateTime = DateTime::createFromFormat('Y-m-d H:i', $selectedDate->format('Y-m-d') . ' ' . $selectedTime->format('H:i'));
+
+    // Vérifier s'il existe un rendez-vous qui est moins d'une heure avant la date et heure sélectionnées
+    foreach ($existingReservations as $existingReservation) {
+        $existingReservationDate = $existingReservation->getDate();
+        $existingReservationTime = $existingReservation->getHeure();
+        $existingReservationDateTime = DateTime::createFromFormat('Y-m-d H:i', $existingReservationDate->format('Y-m-d') . ' ' . $existingReservationTime->format('H:i'));
+
+        if (($selectedDateTime->getTimestamp() - $existingReservationDateTime->getTimestamp()) < 3600) {
+            $context->buildViolation('Un rendez-vous existe déjà pour une date et heure moins d’une heure avant la date et heure sélectionnées.')
                 ->atPath('date')
                 ->addViolation();
+            break;
         }
     }
+}
 }

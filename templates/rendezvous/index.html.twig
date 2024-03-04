@@ -24,8 +24,8 @@
            
             <td> <a href="{{ path('app_rendezvous_show', {'id': rendezvous.id}) }}" class="btn btn-sm btn-primary m-1">Show</a> 
             <a href="{{ path('app_rendezvous_edit', {'id': rendezvous.id}) }}" class="btn btn-sm btn-secondary m-1">Edit</a> 
-                         
-
+            <a href="{{ path('app_rendezvous_calendar', {'id': rendezvous.id}) }}" class="btn btn-sm btn-secondary m-1">Show calendar</a>
+           
             </td> 
             </tr> {% else %} <tr> <td colspan="6">no records found</td> </tr>
              {% endfor %} 
