@@ -10,15 +10,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 #[Route('/user')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository,Request $request): Response
     {
+        $searchQuery = $request->query->get('search');
+
+        if ($searchQuery) {
+            $users = $userRepository->findByEmailOrName($searchQuery);
+        } else {
+            $users = $userRepository->findAll();
+        }
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' =>$users,
         ]);
     }
 
@@ -59,7 +67,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_profile', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [
@@ -78,4 +86,35 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+  
+
+public function generatePdfAction(UserRepository $userRepository): Response
+{
+    $users = $userRepository->findAll();
+    $html = $this->renderView('pdf/users.html.twig', [
+        'users' => $users,
+    ]);
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $dompdf = new Dompdf($options);
+
+    // Load HTML content into Dompdf
+    $dompdf->loadHtml($html);
+
+    // Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render the PDF
+    $dompdf->render();
+
+    // Return the PDF as a Symfony Response
+    return new Response(
+        $dompdf->output(),
+        Response::HTTP_OK,
+        [
+            'Content-Type' => 'application/pdf',
+        ]
+    );
+}
+
 }

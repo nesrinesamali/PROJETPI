@@ -15,44 +15,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
-    #[Assert\Email(
-        message: 'The email {{ value }} is not a valid email.',
-    )]
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\Email]
     private ?string $email = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(type: 'string')]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank (message:"veuillez saisir le Nom")]
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "veuillez saisir le Nom")]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank (message:"veuillez saisir le Prenom ")]
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "veuillez saisir le Prenom ")]
     private ?string $prenom = null;
 
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $typemaladie = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $specialite = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $groupesanguin = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $statuteligibilite = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $token = null;
+
+    #[ORM\Column(length: 150)]
+    private ?string $brochure = null;
 
     public function getId(): ?int
     {
@@ -64,34 +67,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -101,43 +83,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
+    public function getSalt()
     {
-        return null;
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
+    public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -148,7 +118,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(string $nom): self
     {
         $this->nom = $nom;
 
@@ -160,7 +130,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): static
+    public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -172,7 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->typemaladie;
     }
 
-    public function setTypemaladie(?string $typemaladie): static
+    public function setTypemaladie(?string $typemaladie): self
     {
         $this->typemaladie = $typemaladie;
 
@@ -184,7 +154,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->specialite;
     }
 
-    public function setSpecialite(?string $specialite): static
+    public function setSpecialite(?string $specialite): self
     {
         $this->specialite = $specialite;
 
@@ -196,7 +166,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->groupesanguin;
     }
 
-    public function setGroupesanguin(?string $groupesanguin): static
+    public function setGroupesanguin(?string $groupesanguin): self
     {
         $this->groupesanguin = $groupesanguin;
 
@@ -208,9 +178,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->statuteligibilite;
     }
 
-    public function setStatuteligibilite(?string $statuteligibilite): static
+    public function setStatuteligibilite(?string $statuteligibilite): self
     {
         $this->statuteligibilite = $statuteligibilite;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function getBrochure(): ?string
+    {
+        return $this->brochure;
+    }
+
+    public function setBrochure(string $brochure): static
+    {
+        $this->brochure = $brochure;
 
         return $this;
     }

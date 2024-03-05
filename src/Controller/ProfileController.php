@@ -2,47 +2,34 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\RegistrationFormType;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Security\EmailVerifier;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\Security;
 
-class RegistrationController extends AbstractController
+class ProfileController extends AbstractController
 {
-    private EmailVerifier $emailVerifier;
-    private ManagerRegistry $managerRegistry;
-    private UserPasswordEncoderInterface $passwordEncoder;
+    #[Route('/profile', name: 'app_profile')]
 
-    public function __construct(EmailVerifier $emailVerifier, ManagerRegistry $managerRegistry, UserPasswordEncoderInterface $passwordEncoder)
+    public function show(Request $request,  UserPasswordEncoderInterface $passwordEncoder,FlashyNotifier $flashy, SluggerInterface $slugger): Response
     {
-        $this->emailVerifier = $emailVerifier;
-        $this->managerRegistry = $managerRegistry;
-        $this->passwordEncoder = $passwordEncoder;
-    }
-
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, SluggerInterface $slugger): Response
-    {
-        $user = new User();
+        $user = $this->getUser();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-    
+
+        $filteredRoles = array_filter($user->getRoles(), function ($role) {
+            return $role !== 'ROLE_USER';
+        });
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $brochureFile = $form->get('brochure')->getData();
-
             if ($brochureFile) {
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
@@ -56,6 +43,34 @@ class RegistrationController extends AbstractController
                 }
                 $user->setBrochure($newFilename);
             }
+            $flashy->success('Profile Modifer!', 'http://localhost:8000/profile');
+            // Encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_profile');
+        }
+
+        return $this->render('profile/show.html.twig', [
+            'user' => $user,
+            'filteredRoles' => $filteredRoles,
+            'registrationForm' => $form->createView()
+        ]);
+    }
+    public function register(Request $request): Response
+    {
+        $user = new User();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+    
             // Encode the plain password
             $user->setPassword(
                 $this->passwordEncoder->encodePassword(
@@ -92,36 +107,4 @@ class RegistrationController extends AbstractController
         ]);
     }
     
-
-    #[Route('/confirm-email/{token}', name: 'app_confirm_email')]
-    public function confirmEmail(string $token): Response
-    {
-        $user = $this->managerRegistry->getManager()->getRepository(User::class)->findOneBy(['token' => $token]);
-
-        if (!$user) {
-            throw $this->createNotFoundException('Token invalide');
-        }
-
-        // $user->setEmailConfirmed(true);
-
-        // $entityManager = $this->managerRegistry->getManager();
-        // $entityManager->persist($user);
-        // $entityManager->flush();
-
-        return new RedirectResponse($this->generateUrl('app_home'));
-    }
-
-    private function sendVerificationEmail(User $user)
-    {
-        $email = (new TemplatedEmail())
-            ->from(new Address('shayma.gabsy@esprit.tn', 'vitawell'))
-            ->to($user->getEmail())
-            ->subject('Vérification de votre email')
-            ->htmlTemplate('registration/confirmation_email.html.twig')
-            ->context([
-                'token' => $user->getToken(),
-            ]);
-
-        $this->emailVerifier->sendEmailConfirmation('app_confirm_email', $user, $email);
-    }
 }

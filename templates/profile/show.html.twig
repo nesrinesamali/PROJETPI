@@ -1,0 +1,95 @@
+{% extends 'home.html.twig' %}
+
+{% block title %}Profil
+{% endblock %}
+
+{% block body %}
+
+	<script src="//code.jquery.com/jquery.js"></script>
+	<!-- Load Flashy default JavaScript -->
+	<script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+	{% for message in app.flashes('mercuryseries_flashy_notification') %}
+		<script id="flashy-template" type="text/template">
+			<div style="z-index:65665" class="flashy flashy--{{ message.type }}">
+				<a class="flashy__body" href="#" target="_blank"></a>
+			</div>
+		</script>
+
+		<script>
+			flashy("{{ message.message }}", "{{ message.link }}");
+		</script>
+	{% endfor %}
+</div>
+<div class="container-fluid">
+
+
+	<div class="row">
+
+		<div class="col-md-6 p-0">
+			<div class="container">
+				<div class="row justify-content-center">
+					<h1>Mon Profile</h1>
+					<p>Bonjour le
+						{{filteredRoles | join(', ') }}
+						{{ user.nom }}</p>
+					<p>Prenom:
+						{{ user.prenom }}</p>
+					<p>Email:
+						{{ user.email }}</p>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-8">
+						<h1 class="text-center">Modifier Profile</h1>
+
+						{{ form_errors(registrationForm) }}
+
+						{{ form_start(registrationForm) }}
+						<div class="form-group">
+							{{ form_row(registrationForm.brochure, {'attr': {'class': 'form-control', 'placeholder': 'Image'}}) }}
+						</div>
+						<div class="form-group">
+							{{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+						</div>
+						<div class="form-group">
+							{{ form_row(registrationForm.nom, {'attr': {'class': 'form-control', 'placeholder': 'Last Name'}}) }}
+						</div>
+						<div class="form-group">
+							{{ form_row(registrationForm.prenom, {'attr': {'class': 'form-control', 'placeholder': 'First Name'}}) }}
+						</div>
+						<div class="form-group">
+							{{ form_row(registrationForm.roles, {'attr': {'class': 'form-control'}}) }}
+						</div>
+						<div class="form-group">
+							{{ form_label(registrationForm.plainPassword.first, 'Password') }}
+							{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+						</div>
+						<div class="form-group">
+							{{ form_label(registrationForm.plainPassword.second, 'Repeat Password') }}
+							{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Repeat Password'}}) }}
+						</div>
+						<div class="form-group form-check">
+							{{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+							<label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">Agree to terms</label>
+						</div>
+						<div class="row justify-content-center">
+
+							<button type="submit" class="btn btn-primary btn-block">Modifier</button>
+						</div>
+						{{ form_end(registrationForm) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.form-group {
+		margin-bottom: 20px;
+	}
+</style>{% endblock %}

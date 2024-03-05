@@ -20,6 +20,7 @@ class UserType extends AbstractType
         ->add('typemaladie')
         ->add('specialite')
         ->add('groupesanguin')
+        ->add('statuteligibilite')
         ->add('password', PasswordType::class);
     }
 

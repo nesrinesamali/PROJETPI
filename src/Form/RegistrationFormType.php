@@ -7,22 +7,44 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\File;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class)
+        ->add('brochure', FileType::class, [
+            'label' => 'Brochure (Image file)',
+            'mapped' => false,
+            'required' => false,
+            'constraints' => [
+                new File([
+                    'maxSize' => '10240k', 
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/png',
+                        'image/jpg',
+                    ],
+                    'mimeTypesMessage' => 'Please upload a valid image file (jpeg, png, jpg)',
+                ])
+            ],
+        ])
+        ->add('email', EmailType::class, [
+            'constraints' => [
+                new Assert\Email([
+                    'message' => 'L\'adresse e-mail "{{ value }}" n\'est pas valide.'
+                ]),
+            ],
+        ])
             ->add('nom', null, [
                 'constraints' => [
                     new Assert\Regex([
@@ -76,6 +98,7 @@ class RegistrationFormType extends AbstractType
                     ])
                 ],
             ]);
+
     
           
     }
@@ -84,6 +107,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validate' => false, // Disable validation for the form
         ]);
     }
 

@@ -7,12 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class AcceuilController extends AbstractController
 {
     #[Route('/acceuil', name: 'app_acceuil')]
     public function index(): Response
     {
         return $this->render('acceuil/index.html.twig', [
+            'controller_name' => 'AcceuilController',
+        ]);
+    }
+
+    #[Route('/home', name: 'app_home')]
+    public function home(): Response
+    {
+        return $this->render('acceuil/home.html.twig', [
             'controller_name' => 'AcceuilController',
         ]);
     }

@@ -1,14 +1,76 @@
-{% extends 'medecin.html.twig' %}
+{% extends 'home.html.twig' %}
 
-{% block title %}Edit User
+{% block title %}Modifier l'utilisateur{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Style pour le conteneur */
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f0f8ff; /* Bleu clair */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Style pour le formulaire */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        /* Style pour les cellules du formulaire */
+        td, th {
+            border: 1px solid #ddd;
+            padding: 12px; /* Augmentation de la taille du padding */
+            text-align: left;
+        }
+
+        /* Style pour les en-têtes de colonnes */
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style pour les liens */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style pour les boutons */
+        .btn {
+            background-color: #007bff; /* Bleu */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px; /* Espacement entre les boutons */
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Bleu foncé au survol */
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-	<h1>Edit User</h1>
-
-	{{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-
-	<a href="{{ path('app_user_index') }}">back to list</a>
-
-	{{ include('user/_delete_form.html.twig') }}
+    <div class="container">
+        <table>
+            <tr>
+                <th>Formulaire</th>
+            </tr>
+            <tr>
+                <td>{{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}</td>
+            </tr>
+        </table>
+    </div>
 {% endblock %}

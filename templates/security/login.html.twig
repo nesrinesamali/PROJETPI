@@ -1,76 +1,77 @@
 {% extends 'front.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in!
+{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 p-0">
-                <img src="{{ asset('img/team-2.jpg') }}" alt="Medical Image" class="img-fluid w-100 h-100">
-            </div>
-            <div class="col-md-6 d-flex align-items-center justify-content-center">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            {% for flash_message in app.flashes('success') %}
-                                <div class="alert alert-success">{{ flash_message }}</div>
-                            {% endfor %}
+	<div class="bg-white text-center rounded p-5">
+		<div class="row">
+			<div class="col-md-6 p-0">
+				<img src="{{ asset('img/team-2.jpg') }}" alt="Medical Image" class="img-fluid w-100 h-100">
+			</div>
+			<div class="col-md-6 d-flex align-items-center justify-content-center">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-8">
+							{% for flash_message in app.flashes('success') %}
+								<div class="alert alert-success">{{ flash_message }}</div>
+							{% endfor %}
 
-                            <form method="post" class="form-signin">
-                                {% if error %}
-                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                {% endif %}
+							<form method="post" class="form-signin">
+								{% if error %}
+									<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+								{% endif %}
 
-                                {% if app.user %}
-                                    <div class="mb-3">
-                                        You are logged in as
-                                        {{ app.user.userIdentifier }},
-                                        <a href="{{ path('app_logout') }}">Logout</a>
-                                    </div>
-                                {% endif %}
+								{% if app.user %}
+									<div class="mb-3">
+										You are logged in as
+										{{ app.user.userIdentifier }},
+										<a href="{{ path('app_logout') }}">Logout</a>
+									</div>
+								{% endif %}
 
-                                <h1 class="h3 mb-3 font-weight-normal text-center">PLEASE SIGN IN</h1>
-                                <div class="form-group">
-                                    <label for="inputEmail" class="sr-only">Email</label>
-                                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" autocomplete="email" required autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword" class="sr-only">Password</label>
-                                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" autocomplete="current-password" required>
-                                </div>
+								<h1 class="h3 mb-3 font-weight-normal text-center">PLEASE SIGN IN</h1>
+								<div class="form-group">
+									<label for="inputEmail" class="sr-only">Email</label>
+									<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" autocomplete="email" required autofocus>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword" class="sr-only">Password</label>
+									<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" autocomplete="current-password" required>
+								</div>
 
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+								<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+								<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <style>
-        .form-group {
-            margin-bottom: 20px;
-        }
+	<style>
+		.form-group {
+			margin-bottom: 20px;
+		}
 
-        .form-signin {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
+		.form-signin {
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			background-color: #f9f9f9;
+		}
 
-        .form-signin input[type="email"],
-        .form-signin input[type="password"] {
-            height: 50px;
-            font-size: 16px;
-        }
+		.form-signin input[type="email"],
+		.form-signin input[type="password"] {
+			height: 50px;
+			font-size: 16px;
+		}
 
-        .form-signin button[type="submit"] {
-            margin-top: 15px;
-        }
-    </style>
+		.form-signin button[type="submit"] {
+			margin-top: 15px;
+		}
+	</style>
 {% endblock %}
