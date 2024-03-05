@@ -1,12 +1,54 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h1>Créer un Rendezvous</h1>
-
-    {{ include('rendezvous/_form.html.twig') }}
-
-    <a href="{{ path('app_rendezvous_index') }}">Back to list</a>
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="mb-4">
+                        <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">ᗩᑭᑭOIᑎTᗰEᑎT</h5>
+                        <h1 class="display-4">Réserver votre rendez-vous</h1>
+                    </div>
+                    <p class="mb-5">Prenez rendez-vous avec nous dès aujourd'hui ! En indiquant votre nom, en sélectionnant un médecin et en choisissant une date et une heure, vous pouvez facilement réserver un créneau qui vous convient. Ne retardez pas vos soins de santé - prenez rendez-vous dès maintenant et faites le premier pas vers une meilleure santé.</p>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 me-3" href="http://127.0.0.1:8001/centre/don/back">Find A center</a>
+                    <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="">Back</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bg-light text-center rounded p-5">
+                        <h1 class="mb-4"> Réserver votre Rendez-vous </h1>
+                        
+                            {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                       <label>Nom patient</label>
+                                       {{ form_widget(form.nompatient, {'attr': {'class': 'form-select bg-white border-0'}}) }}
+                                       {{ form_errors(form.nompatient) }}
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <label>Nom Medecin</label>
+                                        {{ form_widget(form.nommedecin, {'attr': {'class': 'form-select bg-white border-0'}}) }}
+                                    </div>
+                                        
+                                        <div class="col-12 col-sm-6">
+                                            <label>Date</label>
+                                        {{ form_widget(form.date, {'attr': {'class': 'date'}}) }}
+                                    </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>Heure</label>
+                                        {{ form_widget(form.heure, {'attr': {'class': 'date'}}) }}
+                                        </div>
+                                <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3">{{ button_label|default('Réserver') }}</button>
+                                  
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+               
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -42,3 +84,8 @@
         });
     </script>
 {% endblock %}
+
+
+
+
+

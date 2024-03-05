@@ -149,5 +149,10 @@ class Rendezvous
 
         return $this;
     }
+    public function toString(): string
+{
+    // Customize the string representation of your entity
+    return $this->nompatient . ' ' . $this->nommedecin . ' ' . $this->date->format('m/d/Y') . ' ' . $this->heure->format('H:i:s');
+}
 }
 
