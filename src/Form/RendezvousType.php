@@ -74,14 +74,18 @@ class RendezvousType extends AbstractType
         $existingReservationDate = $existingReservation->getDate();
         $existingReservationTime = $existingReservation->getHeure();
         $existingReservationDateTime = DateTime::createFromFormat('Y-m-d H:i', $existingReservationDate->format('Y-m-d') . ' ' . $existingReservationTime->format('H:i'));
-
-        if (($selectedDateTime->getTimestamp() - $existingReservationDateTime->getTimestamp()) < 3600) {
-            
+    
+        // Calculate the difference between selected and existing reservation datetime
+        $diff = $selectedDateTime->diff($existingReservationDateTime);
+    
+        // Check if the difference is less than an hour
+        if ($diff->days == 0 && ($diff->h < 1 || ($diff->h == 1 && $diff->i < 0))) {
             $context->buildViolation('Un rendez-vous existe déjà pour une date et heure moins d’une heure avant la date et heure sélectionnées.')
                 ->atPath('date')
                 ->addViolation();
             break;
         }
     }
+    
 }
 }

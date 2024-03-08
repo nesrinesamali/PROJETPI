@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New DossierMedical{% endblock %}
+
+{% block content %}
+<div class="hero-header">
+    <div class="content-container">
+        <h1 class="page-title">Create New Medical Record</h1>
+
+        {{ include('dossier_medical/_form.html.twig') }}
+        
+
+        <a href="{{ path('app_dossier_medical_index') }}" class="back-link">back to list</a>
+    </div>
+</div>
+    
+    <style>  
+   .page-title{
+        color: #0dcaf0;
+    }
+    .content-container {
+        max-width: 50%;
+        margin: auto;
+        padding: 35px;
+        color: #0dcaf0;
+        background-color: #1D2A4D;
+    }
+    
+
+    @media (max-width: 768px) {    
+        .content-container {            
+            width: `00%;
+            font-size: 20px 6px;
+            color: #0dcaf0;
+            background-color: #1D2A4D;
+        }                
+    }
+    .back-link {
+        display: inline-block;
+        float: right;                
+        color: white;
+        font-size:  14px;
+        text-decoration: none;        
+        border: solid #dcdcdc;
+        background-color: #0dcaf0;
+        height: 45px;
+        line-height: 45px;
+        -webkit-border-radius: 6;
+        -moz-border-radius: 4;
+        border-radius: 6px/6px;
+        -webkit-box-shadow: 0 1px 0 rgba(256, 256, 256, 0.1), inset  0 1px 0 rgba(256, 256, 256, 0.1);
+        box-shadow: 0 1px 0 rgba(256,  256, 256, 0.1), inset 0  1px 0 rgba(256, 256, 256, 0.1);
+        font-family: 'Open Sans', sans-serif;
+        font-weight: bold;
+        margin-top: 35px;
+    }     
+    .hero-header {
+    background: url(../img/hero.jpg) top right ;
+    background-size: cover;
+    }
+    </style>
+{% endblock %}

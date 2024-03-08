@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DossierMedical
+{% endblock %}
+
+{% block content %}
+	<h1>DossierMedical</h1>
+	<div class="col-auto">
+		<a class="btn app-btn-secondary" href="{{path('app_dossier_medical_pdf', {'id': dossier_medical.id})}}">
+			<svg style="color: red; width: 28px; height: 28px;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512">
+				<path d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z" fill="red"></path>
+			</svg>
+
+
+			Export Users
+		</a>
+	</div>
+</div>
+<!--//row--></div><!--//table-utilities--></div><!--//col-auto--></div><!--//row--></div><div class="datatable-container"><table class="table datatable datatable-table"><tbody><tr>
+<th>Patient</th>
+<td>{{ dossier_medical.patient }}</td></tr><tr>
+<th>Doctor</th>
+<td>{{ dossier_medical.user.nom  }}
+	{{dossier_medical.user.prenom}}</td></tr><tr>
+<th>Date</th>
+<td>{{ dossier_medical.date ? dossier_medical.date|date('Y-m-d') : '' }}</td></tr><tr>
+<th>Diagnosis</th>
+<td>{{ dossier_medical.diagnosis }}</td></tr><tr>
+<th>Test</th>
+<td>{{ dossier_medical.test }}</td></tr><tr>
+<th>Prescription</th>
+<td>
+	{% for prescription in dossier_medical.getPrescription() %}
+		{{ prescription.id }}
+		-
+		{{ prescription.patient }}
+	{% endfor %}
+</td></tr><BackEdit</a </tbody> </table> <img src="{{ path('app_qr', { 'id': dossier_medical.id }) }}" alt="QR Code"> </div> 
+<a href="{{ path('app_dossier_medical_index') }}" class="btn btn-primary"> to list</a> <a href="{{ path('app_dossier_medical_edit', {'id': dossier_medical.id}) }}" class="btn btn-info">>
+
+{{ include('dossier_medical/_delete_form.html.twig') }}
+
+
+<style>
+	.table-container {
+		max-width: 800px;
+		margin: 20px auto;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		overflow-x: auto;
+	}
+
+	.table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table th,
+	.table td {
+		padding: 10px;
+		border-bottom: 1px solid #ddd;
+		text-align: left;
+	}
+
+	.table th {
+		background-color: #f0f0f0;
+		font-weight: bold;
+	}
+
+	.table td {
+		background-color: #fff;
+	}
+
+	.btn {
+		margin: 10px;
+		padding: 10px 20px;
+		text-decoration: none;
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+	}
+
+	.btn-info {
+		background-color: #17a2b8;
+	}
+
+	.btn-info:hover {
+		background-color: #117a8b;
+	}
+</style>{% endblock %}

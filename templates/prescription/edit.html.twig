@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Prescription{% endblock %}
+
+{% block content %}
+    <div class="content-container">
+        <h1 class="page-title">Edit Prescription</h1>
+
+        <div class="form-container">
+            <form class="prescription-form">
+                {{ include('prescription/_form.html.twig', {'button_label': 'Update'}) }}
+            </form>
+        </div>
+
+        <a href="{{ path('app_prescription_index') }}" class="back-link">back to list</a>
+        
+        <div class="delete-form-container">
+            {{ include('prescription/_delete_form.html.twig') }}
+        </div>
+    </div>
+
+    <style>
+        /* Center the content */
+        .content-container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Center the page title */
+        .page-title {
+            color: #0dcaf0;
+        }
+
+        /* Style for the form container */
+        .form-container {
+            margin-top: 20px; /* Adjust the margin as needed */
+            padding: 20px;
+            background-color: #f9f9f9; /* Add background color */
+            border: 1px solid #ccc; /* Add border */
+            border-radius: 5px; /* Add border radius */
+        }
+
+        /* Style for the back link */
+        .back-link {
+           display: inline-block;
+        width: 140px; /* Set the width of the button */
+        height: 45px; /* Set the height of the button */
+        padding: 10px 20px; /* Set the padding inside the button */
+        font-size: 18px;
+        background-color: #0dcaf0; /* Blue color */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none; /* Remove default link underline */
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        }
+
+        .back-link:hover {
+           background-color: #0056b3; 
+        color: white;
+        }
+
+        /* Style for the delete form container */
+        .delete-form-container {
+            margin-top: 20px;
+        }
+
+        /* Style for the form elements */
+        .prescription-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .prescription-form input[type="text"],
+        .prescription-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .prescription-form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .prescription-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .prescription-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}

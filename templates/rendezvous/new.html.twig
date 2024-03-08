@@ -36,6 +36,7 @@
                                             <label>Heure</label>
                                         {{ form_widget(form.heure, {'attr': {'class': 'date'}}) }}
                                         </div>
+                                        {{ form_errors(form.date) }}
                                 <div class="col-12">
                                         <button class="btn btn-primary w-100 py-3">{{ button_label|default('Réserver') }}</button>
                                   

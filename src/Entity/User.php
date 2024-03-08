@@ -61,10 +61,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Rendezvous::class, orphanRemoval: true)]
     private Collection $rendezvouses;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?DossierMedical $dossierMedical = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Prescription::class, orphanRemoval: true)]
+    private Collection $prescriptions;
+
     public function __construct()
     {
         $this->dons = new ArrayCollection();
         $this->rendezvouses = new ArrayCollection();
+        $this->prescriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -306,6 +313,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($rendezvouse->getUser() === $this) {
                 $rendezvouse->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDossierMedical(): ?DossierMedical
+    {
+        return $this->dossierMedical;
+    }
+
+    public function setDossierMedical(DossierMedical $dossierMedical): static
+    {
+        // set the owning side of the relation if necessary
+        if ($dossierMedical->getUser() !== $this) {
+            $dossierMedical->setUser($this);
+        }
+
+        $this->dossierMedical = $dossierMedical;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Prescription>
+     */
+    public function getPrescriptions(): Collection
+    {
+        return $this->prescriptions;
+    }
+
+    public function addPrescription(Prescription $prescription): static
+    {
+        if (!$this->prescriptions->contains($prescription)) {
+            $this->prescriptions->add($prescription);
+            $prescription->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrescription(Prescription $prescription): static
+    {
+        if ($this->prescriptions->removeElement($prescription)) {
+            // set the owning side to null (unless already changed)
+            if ($prescription->getUser() === $this) {
+                $prescription->setUser(null);
             }
         }
 
