@@ -16,7 +16,10 @@
 {% endfor %}
 
 <h1>Prescription index</h1>
-
+<div class="input-group search-area">
+    <input type="text" class="form-control" id="searchInput" placeholder="Search ...">
+    <span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -58,6 +61,34 @@
 <div class="btn btn-new">
 <a href="{{ path('app_prescription_new') }}">Create new</a>
 </div>
+
+<style>
+    /* Your existing CSS styles */
+
+    /* Add new CSS for search area */
+    .search-area {
+        margin-bottom: 20px;
+    }
+</style>
+
+<script>
+    function filterPrescriptions() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('.table tbody tr');
+
+        rows.forEach(row => {
+            let visible = false;
+            row.querySelectorAll('td').forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                    visible = true;
+                }
+            });
+            row.style.display = visible ? '' : 'none';
+        });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterPrescriptions);
+</script>
 
   <style>
     /* Style for the h1 heading */

@@ -5,7 +5,7 @@
 {% block body %}
     <h1>DossierMedical</h1>
     <div class="col-auto">                           
-                                    <a class="btn app-btn-secondary" href="{{path('app_user_pdf')}}">
+                                    <a class="btn app-btn-secondary" href="{{path('app_dossier_medical_pdf', {'id': dossier_medical.id})}}">
                                 <svg style="color: red; width: 28px; height: 28px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <path d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z" fill="red"></path>
 </svg>
@@ -21,8 +21,8 @@
 </div>
 
     
-    <div class="table-container">
-        <table class="table">
+    <div class="datatable-container">
+        <table class="table datatable datatable-table">
             <tbody>
                
                 <tr>
@@ -51,12 +51,10 @@
     {{ prescription.id }} - {{ prescription.patient }}
 {% endfor %}</td>
                 </tr>
-                <tr>
-                    <th>QR code</th>
-                    <td><img src="{{ path('generate_qr_code', { 'id': dossier_medical.id }) }}" alt="QR Code"></td>
-                </tr>
+                <
             </tbody>
         </table>
+        <img src="{{ path('generate_qr_code', { 'id': dossier_medical.id }) }}" alt="QR Code">
     </div>
 
     <a href="{{ path('app_dossier_medical_index') }}" class="btn btn-primary">Back to List</a>
@@ -124,3 +122,6 @@
         }
     </style>
 {% endblock %}
+<div class="datatable-container"><table class="table datatable datatable-table"><thead><tr><th data-sortable="true" style="width: 20.825852782764812%;"><button class="datatable-sorter">
+                      <b>N</b>ame
+                    </button></th><th data-sortable="true" style="width: 11.131059245960502%;"><button class="datatable-sorter">Ext.</button></th><th data-sortable="true" style="width: 26.750448833034113%;"><button class="datatable-sorter">City</button></th><th data-format="YYYY/DD/MM" data-sortable="true" data-type="date" style="width: 18.850987432675044%;"><button class="datatable-sorter">Start Date</button></th><th data-sortable="true" class="red" style="width: 22.44165170556553%;"><button class="datatable-sorter">Completion</button></th></tr></thead><tbody><tr data-index="0"><td>Unity Pugh</td><td>9958</td><td>Curicó</td><td>2005/02/11</td><td class="green">37%</td></tr><tr data-index="1"><td>Theodore Duran</td><td>8971</td><td>Dhanbad</td><td>1999/04/07</td><td class="green">97%</td></tr><tr data-index="2"><td>Kylie Bishop</td><td>3147</td><td>Norman</td><td>2005/09/08</td><td class="green">63%</td></tr><tr data-index="3"><td>Willow Gilliam</td><td>3497</td><td>Amqui</td><td>2009/29/11</td><td class="green">30%</td></tr><tr data-index="4"><td>Blossom Dickerson</td><td>5018</td><td>Kempten</td><td>2006/11/09</td><td class="green">17%</td></tr><tr data-index="5"><td>Elliott Snyder</td><td>3925</td><td>Enines</td><td>2006/03/08</td><td class="green">57%</td></tr><tr data-index="6"><td>Castor Pugh</td><td>9488</td><td>Neath</td><td>2014/23/12</td><td class="green">93%</td></tr><tr data-index="7"><td>Pearl Carlson</td><td>6231</td><td>Cobourg</td><td>2014/31/08</td><td class="green">100%</td></tr><tr data-index="8"><td>Deirdre Bridges</td><td>1579</td><td>Eberswalde-Finow</td><td>2014/26/08</td><td class="green">44%</td></tr><tr data-index="9"><td>Daniel Baldwin</td><td>6095</td><td>Moircy</td><td>2000/11/01</td><td class="green">33%</td></tr></tbody></table></div>

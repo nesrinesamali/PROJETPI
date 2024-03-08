@@ -5,7 +5,11 @@ namespace App\Controller;
 use App\Entity\Prescription;
 use App\Form\PrescriptionType;
 use App\Repository\PrescriptionRepository;
+use Doctrine\DBAL\Driver\Mysqli\Initializer\Options;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options as DompdfOptions;
+use Endroid\QrCode\QrCode;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,4 +100,39 @@ class PrescriptionController extends AbstractController
 
         return $this->redirectToRoute('app_prescription_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/{id}/pdf', name: 'app_prescription_pdf', methods: ['GET'])]
+    public function generatePdf(Prescription $prescription): Response
+    {
+        // Create a new instance of Dompdf
+        $options = new DompdfOptions();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        // Render the PDF template with the prescription data
+        $html = $this->renderView('prescription/pdf.html.twig', [
+            'prescription' => $prescription,
+        ]);
+
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the PDF
+        $dompdf->render();
+
+        // Stream the PDF to the browser
+        $response = new Response($dompdf->output());
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        // Set the PDF file name
+        $filename = sprintf('prescription_%s.pdf', $prescription->getId());
+        $response->headers->set('Content-Disposition', 'inline; filename="' . $filename . '"');
+
+        return $response;
+    }
+        
 }
+

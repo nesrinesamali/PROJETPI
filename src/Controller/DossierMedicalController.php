@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\DossierMedical;
+use App\Entity\Prescription;
 use App\Form\DossierMedicalType;
 use App\Repository\DossierMedicalRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,13 +13,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
-use Dompdf\Options;
+use Dompdf\Options as DompdfOptions;
 use Knp\Component\Pager\PaginatorInterface;
 use Endroid\QrCodeBundle\Response\QrCodeResponse;
 
 #[Route('/dossier/medical')]
 class DossierMedicalController extends AbstractController
 {
+
+     
+   
     #[Route('/dossier', name: 'app_dossier_medical_index', methods: ['GET'])]
     public function index(DossierMedicalRepository $dossierMedicalRepository, request  $request, PaginatorInterface $Paginator): Response
     {
@@ -100,46 +104,52 @@ class DossierMedicalController extends AbstractController
         return $this->redirectToRoute('app_dossier_medical_index', [], Response::HTTP_SEE_OTHER);
     }
    
-    #[Route('/ExportPdf', name: 'app_user_pdf', methods: ['GET', 'POST'])]
-public function ExportPdf(DossierMedicalRepository $dossierRepository): Response
-{
-    $dossierMedical = $dossierRepository->findAll();
+    
+    #[Route('/{id}/pdf', name: 'app_dossier_medical_pdf', methods: ['GET'])]
+    public function generatePdf(DossierMedical $dossiermedical): Response
+    {
+        // Create a new instance of Dompdf
+        $options = new DompdfOptions();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $dompdf = new Dompdf($options);
 
-    if (!$dossierMedical) {
-        throw $this->createNotFoundException('No dossier medical records found');
+        // Render the PDF template with the prescription data
+        $html = $this->renderView('dossier_medical/pdf.html.twig', [
+            'dossier_medical' => $dossiermedical,
+        ]);
+
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the PDF
+        $dompdf->render();
+
+        // Stream the PDF to the browser
+        $response = new Response($dompdf->output());
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        // Set the PDF file name
+        $filename = sprintf('prescription_%s.pdf', $dossiermedical->getId());
+        $response->headers->set('Content-Disposition', 'inline; filename="' . $filename . '"');
+
+        return $response;
     }
 
-    $options = new Options();
-    $options->set('defaultFont', 'Arial');
-
-    $dompdf = new Dompdf($options);
-    $html = $this->renderView('dossier_medical/pdf.html.twig', [
-        'dossier_medical' => $dossierMedical,
-    ]);
-
-    $dompdf->loadHtml($html);
-
-    // Set paper size and orientation
-    $dompdf->setPaper('A4', 'landscape');
-
-    // Render the HTML as PDF
-    $dompdf->render();
-
-    // Output the generated PDF to browser (inline view)
-    return new Response($dompdf->output(), 200, [
-        'Content-Type' => 'application/pdf',
-    ]);
-}
-
-#[Route('/qrcode', name: 'app_qr', methods: ['POST'])]
-public function generateQrCode($dossierMedicalId): Response
+    
+    #[Route('/qrcode/{prescriptionId}', name: 'app_qr', methods: ['GET'])]
+    public function generateQrCode(string $prescriptionId): Response
     {
-        // Generate QR code with the unique identifier of the dossier medical file
+        // Generate QR code with the prescription ID
         $qrCodeFactory = $this->get('endroid.qrcode.factory');
-        $qrCode = $qrCodeFactory->create($dossierMedicalId);
-
+        $qrCode = $qrCodeFactory->create($prescriptionId);
+    
         // Return the QR code as a response
         return new QrCodeResponse($qrCode);
     }
-
+    
+    
 }

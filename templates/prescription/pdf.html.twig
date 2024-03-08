@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Prescription - {{ prescription.id }}</title>
+    <style>
+        /* Add styles for PDF layout */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prescription - {{ prescription.id }}</h1>
+    <table>
+        <tr>
+            <th>Patient</th>
+            <td>{{ prescription.patient }}</td>
+        </tr>
+        <tr>
+            <th>Doctor</th>
+            <td>{{ prescription.doctor }}</td>
+        </tr>
+        <tr>
+            <th>Created At</th>
+            <td>{{ prescription.CreatedAt ? prescription.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Medications</th>
+            <td>{{ prescription.medications }}</td>
+        </tr>
+        <tr>
+            <th>Instructions</th>
+            <td>{{ prescription.instructions }}</td>
+        </tr>
+        <tr>
+            <th>Pharmacy</th>
+            <td>{{ prescription.pharmacy }}</td>
+        </tr>
+    </table>
+</body>
+</html>

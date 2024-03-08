@@ -1,60 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User List</title>
+    <title>Dossier Medical - {{ dossier_medical.id }}</title>
     <style>
-        /* Define your styles for the PDF here */
+        /* Add styles for PDF layout */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white; /* Light blue background */
+            margin: 0;
+            padding: 20px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
         th, td {
-            border: 1px solid black;
+            border: 1px solid #90caf9; /* Lighter blue border */
             padding: 8px;
-            text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #bbdefb; /* Light blue header background */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1565c0; /* Dark blue header text */
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            max-width: 200px;
+            height: auto;
         }
     </style>
 </head>
 <body>
-
-    <div>
-    <center><h1>Users List</h1></center>
+    <div class="logo-container">
+        <img alt="Logo" class="logo" >  <!-- Replace "path/to/logo.png" with the actual path to your logo image -->
+    </div>
+    <h1>Dossier Medical - {{ dossier_medical.id }}</h1>
     <table>
-        <thead> <!-- Modification: changer la couleur en vert -->
-            <tr>
-             
-                <th>Patient</th>
-                <th>Doctor</th>
-                <th>Date</th>
-                <th>Diagnosis</th>
-                <th>Test</th>
-                <th>Prescription</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-             {% for dossier_medical in dossier_medicals %}
-            <tr>
-                <td>{{ dossier_medical.id }}</td>
-                <td>{{ dossier_medical.patient }}</td>
-                <td>{{ dossier_medical.doctor }}</td>
-                <td>{{ dossier_medical.date ? dossier_medical.date|date('Y-m-d') : '' }}</td>
-                <td>{{ dossier_medical.diagnosis }}</td>
-                <td>{{ dossier_medical.test }}</td>
-                <td>
-            {% else %}
-                <tr>
-                    <td colspan="10" >No records found</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+        <tr>
+            <th>Patient</th>
+            <td>{{ dossier_medical.patient }}</td>
+        </tr>
+        <tr>
+            <th>Doctor</th>
+            <td>{{ dossier_medical.doctor }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ dossier_medical.date ? dossier_medical.date|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Diagnosis</th>
+            <td>{{ dossier_medical.diagnosis }}</td>
+        </tr>
+        <tr>
+            <th>Test</th>
+            <td>{{ dossier_medical.test }}</td>
+        </tr>
     </table>
-</div>
 </body>
 </html>
-
