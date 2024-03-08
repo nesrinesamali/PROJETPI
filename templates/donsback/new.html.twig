@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Dons{% endblock %}
+
+{% block content %}
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="mb-4">
+                        <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">ᗩᑭᑭOIᑎTᗰEᑎT</h5>
+                        <h1 class="display-4">𝐁𝐥𝐨𝐨𝐝 𝐃𝐨𝐧𝐚𝐭𝐢𝐨𝐧 𝐀𝐩𝐩𝐨𝐢𝐧𝐭𝐦𝐞𝐧𝐭 𝐟𝐨𝐫 𝐘𝐨𝐮𝐫 𝐋𝐨𝐯𝐞𝐝 𝐎𝐧𝐞𝐬</h1>
+                    </div>
+                    <p class="mb-5">𝙱𝚘𝚘𝚔 𝚢𝚘𝚞𝚛 𝙱𝚕𝚘𝚘𝚍 𝙳𝚘𝚗𝚊𝚝𝚒𝚘𝚗 𝙰𝚙𝚙𝚘𝚒𝚗𝚝𝚖𝚎𝚗𝚝 𝚗𝚘𝚠 𝚝𝚘 𝚖𝚊𝚔𝚎 𝚊 𝚍𝚒𝚏𝚏𝚎𝚛𝚎𝚗𝚌𝚎. 𝚈𝚘𝚞𝚛 𝚌𝚘𝚗𝚝𝚛𝚒𝚋𝚞𝚝𝚒𝚘𝚗 𝚑𝚎𝚕𝚙𝚜 𝚜𝚊𝚟𝚎 𝚕𝚒𝚟𝚎𝚜 𝚊𝚗𝚍 𝚋𝚛𝚒𝚗𝚐𝚜 𝚑𝚘𝚙𝚎 𝚝𝚘 𝚝𝚑𝚘𝚜𝚎 𝚒𝚗 𝚗𝚎𝚎𝚍. 𝙹𝚘𝚒𝚗 𝚞𝚜 𝚒𝚗 𝚝𝚑𝚒𝚜 𝚗𝚘𝚋𝚕𝚎 𝚌𝚊𝚞𝚜𝚎 𝚊𝚗𝚍 𝚋𝚎 𝚊 𝚋𝚎𝚊𝚌𝚘𝚗 𝚘𝚏 𝚕𝚒𝚐𝚑𝚝 𝚏𝚘𝚛 𝚘𝚝𝚑𝚎𝚛𝚜.</p>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 me-3" href="http://127.0.0.1:8001/centre/don/back">Find A center</a>
+                    <a class="btn btn-outline-primary rounded-pill py-3 px-5" href="">Back</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bg-light text-center rounded p-5">
+                        <h1 class="mb-4">ᗪOᑎᗩTE ᑎOᗯ</h1>
+                        
+                            {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                       <label>ℂ𝕀ℕ</label>
+                                       {{ form_widget(form.Cin, {'attr': {'class': 'form-select bg-white border-0'}}) }}
+                                       {{ form_errors(form.Cin) }}
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <label>𝔹𝕝𝕠𝕠𝕕 𝔾𝕣𝕠𝕦𝕡</label>
+                                        {{ form_widget(form.GroupeSanguin, {'attr': {'class': 'form-select bg-white border-0'}}) }}
+                                    </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>𝔾𝕖𝕟𝕕𝕖𝕣</label>
+                                        {{ form_widget(form.genre, {'attr': {'class': 'form-select bg-white border-0'}}) }}
+                                    </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>𝔻𝕠𝕟𝕒𝕥𝕚𝕠𝕟 𝕋𝕪𝕡𝕖</label>
+                                        {{ form_widget(form.typededon, {'attr': {'class': 'form-select bg-white border-0'}}) }}
+                                    </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>ℂ𝕖𝕟𝕥𝕖𝕣</label>
+                                        {{ form_widget(form.centreDon, {'attr': {'class': 'form-select bg-white border-0'}}) }}
+                                    </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>𝕊𝕥𝕒𝕥𝕦𝕤</label>
+                                        {{ form_widget(form.Etatmarital, {'attr': {'class': 'form-select bg-white border-0'}}) }}
+                                    </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>𝔻𝕒𝕥𝕖 𝕆𝕗 𝔻𝕠𝕟𝕒𝕥𝕚𝕠𝕟</label>
+                                        {{ form_widget(form.DateDon, {'attr': {'class': 'date'}}) }}
+                                    </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label>𝔻𝕒𝕥𝕖 𝕆𝕗 𝕃𝕒𝕤𝕥 𝔻𝕠𝕟𝕒𝕥𝕚𝕠𝕟</label>
+                                        {{ form_widget(form.datedernierdon, {'attr': {'class': 'date'}}) }}
+                                        </div>
+                                <div class="col-12">
+                                    
+                                    <button class="btn btn-primary w-100 py-3" type="submit">{{ button_label|default('Save') }}</button>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+               
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

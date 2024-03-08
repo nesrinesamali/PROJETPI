@@ -1,0 +1,13 @@
+{% extends 'dashboard/front.html.twig' %}
+
+{% block title %}Edit Rendezvous{% endblock %}
+
+{% block body %}
+    <h1>Edit Rendezvous</h1>
+
+    {{ include('rendezvous_back/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_rendezvous_back_index') }}">back to list</a>
+
+    {{ include('rendezvous_back/_delete_form.html.twig') }}
+{% endblock %}

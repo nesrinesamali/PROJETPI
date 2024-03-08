@@ -1,0 +1,68 @@
+{% extends 'dashboard/front.html.twig' %}
+
+{% block title %}Dons{% endblock %}
+
+{% block body %}
+
+    <h1>Dons</h1>
+    <div class="col-lg-6" style="width: 120%;">
+
+        <div class="card">
+          <div class="card-body" >
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ don.id }}</td>
+            </tr>
+            <tr>
+                <th>DateDon</th>
+                <td>{{ don.DateDon ? don.DateDon|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Datedernierdon</th>
+                <td>{{ don.datedernierdon ? don.datedernierdon|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ don.genre }}</td>
+            </tr>
+            <tr>
+                <th>GroupeSanguin</th>
+                <td>{{ don.GroupeSanguin }}</td>
+            </tr>
+            <tr>
+                <th>Etatmarital</th>
+                <td>{{ don.Etatmarital }}</td>
+            </tr>
+            <tr>
+                <th>Typededon</th>
+                <td>{{ don.typededon }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ don.Cin }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="d-flex justify-content-center mb-3">
+    <a href="{{ path('app_dons_edit', {'id': don.id}) }}" class="btn btn-outline-success mx-2" > <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>edit</a>
+    <a href="{{ path('app_dons_index') }}" class="btn btn-outline-dark mx-2" style="width:10%"> <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Back</a>
+    {{ include('dons/_delete_form.html.twig') }}
+</div>
+</div>
+</div>
+</div>
+<img src="{{ path('generate_qr_code', {
+    'DateDon': don.DateDon|date('Y-m-d H:i:s'),
+    'datedernierdon': don.datedernierdon|date('Y-m-d'),
+    'genre': don.genre,
+    'GroupeSanguin': don.GroupeSanguin,
+    'Etatmarital': don.Etatmarital,
+    'typededon': don.typededon,
+    'Cin': don.Cin
+}) }}" alt="QR Code" >
+
+   
+{% endblock %}

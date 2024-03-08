@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	<h1>
+		La liste des rendez-vous
+	</h1>
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped table-hover">
+			<a href="{{ path('export_product_to_pdf') }}" class="btn btn-danger">
+				<i class="bi bi-file-pdf"></i>
+				PDF
+			</a>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nompatient</th>
+					<th>Nommedecin</th>
+					<th>Date</th>
+					<th>Heure</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for rendezvous in rendezvouses %}
+					<tr>
+						<td>{{ rendezvous.id }}</td>
+						<td>{{ rendezvous.nompatient }}</td>
+						<td>{{ rendezvous.nommedecin }}</td>
+						<td>{{ rendezvous.date ? rendezvous.date|date('Y-m-d') : '' }}</td>
+						<td>{{ rendezvous.heure ? rendezvous.heure|date('H:i:s') : '' }}</td>
+
+						<td>
+							<a href="{{ path('app_rendezvous_show', {'id': rendezvous.id}) }}" class="btn btn-sm btn-primary m-1">Show</a>
+							<a href="{{ path('app_rendezvous_edit', {'id': rendezvous.id}) }}" class="btn btn-sm btn-secondary m-1">Edit</a>
+							<a href="{{ path('app_rendezvous_calendar', {'id': rendezvous.id}) }}" class="btn btn-sm btn-secondary m-1">Show calendar</a>
+
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="6">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<a href="{{ path('app_rendezvous_new') }}" class="btn btn-success">Create New</a>
+
+{% endblock %}
